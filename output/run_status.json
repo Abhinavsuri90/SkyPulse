@@ -1,0 +1,66 @@
+{
+  "run_id": "20260924T000817Z",
+  "status": "OK",
+  "stages": [
+    {
+      "stage": "ingest",
+      "seconds": 1.4,
+      "result": {
+        "ourairports": 86119,
+        "open_meteo": 744,
+        "dgca": 18,
+        "opensky": 20549,
+        "aviationstack": 1486
+      }
+    },
+    {
+      "stage": "validate",
+      "seconds": 0.7,
+      "result": {
+        "opensky": 21183,
+        "aviationstack": 1486,
+        "weather": 744,
+        "airports": 86119,
+        "flags": 15931
+      }
+    },
+    {
+      "stage": "model",
+      "seconds": 1.3,
+      "result": {
+        "flight_leg_rows": 20549,
+        "in_kpi": {
+          "DEP": 6430,
+          "ARR": 5966
+        },
+        "turnarounds": {
+          "pairs": 9675,
+          "valid": 9276
+        }
+      }
+    },
+    {
+      "stage": "metrics",
+      "seconds": 2.0,
+      "result": {
+        "otp_pct": 91.6,
+        "n": 6430
+      }
+    },
+    {
+      "stage": "benchmark",
+      "seconds": 1.9,
+      "result": {
+        "ours_pct": 91.8,
+        "dgca_pct": 92.0,
+        "gap_pts": -0.2
+      }
+    },
+    {
+      "stage": "report",
+      "seconds": 0.0,
+      "result": null
+    }
+  ],
+  "at_utc": "2026-09-24T00:08:24+00:00"
+}
