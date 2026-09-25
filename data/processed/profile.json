@@ -1,0 +1,70 @@
+[
+  {
+    "table": "stg_opensky",
+    "rows": 21183,
+    "columns": 15,
+    "null_pct": {
+      "est_dep_airport": 23.8,
+      "est_arr_airport": 21.0,
+      "dep_horiz_m": 23.8,
+      "dep_vert_m": 23.8,
+      "arr_horiz_m": 21.0,
+      "arr_vert_m": 21.0
+    },
+    "distinct": {
+      "leg_id": 21183,
+      "direction": 2,
+      "icao24": 1245,
+      "callsign": 1291,
+      "first_seen": 20553,
+      "last_seen": 20542,
+      "est_dep_airport": 97,
+      "est_arr_airport": 119,
+      "dep_horiz_m": 5612,
+      "dep_vert_m": 842,
+      "arr_horiz_m": 6159,
+      "arr_vert_m": 916
+    }
+  },
+  {
+    "table": "stg_aviationstack",
+    "rows": 1486,
+    "columns": 18,
+    "null_pct": {
+      "status": 0.9,
+      "actual_local": 24.8,
+      "actual_runway_local": 24.8,
+      "icao24_raw": 1.4,
+      "icao24": 1.4
+    },
+    "distinct": {
+      "as_id": 1486,
+      "direction": 2,
+      "flight_date": 3,
+      "status": 4,
+      "flight_icao": 837,
+      "flight_iata": 837,
+      "is_codeshare": 2,
+      "op_flight_icao": 639,
+      "airline_icao": 24,
+      "sched_local": 499,
+      "actual_local": 825,
+      "actual_runway_local": 825
+    }
+  },
+  {
+    "table": "stg_weather",
+    "rows": 744,
+    "columns": 7,
+    "null_pct": {},
+    "distinct": {
+      "hour_local": 744,
+      "precipitation": 28,
+      "rain": 15,
+      "wind_speed_10m": 160,
+      "wind_gusts_10m": 94,
+      "visibility": 626,
+      "weather_code": 10
+    }
+  }
+]
