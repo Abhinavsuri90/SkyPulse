@@ -1,0 +1,24 @@
+# Reproducibility check on every push: tests pass, and the pipeline rebuilds the committed
+# outputs from the committed raw snapshot with no network and no API keys.
+name: pipeline
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Tests
+        run: pytest -q
+      - name: Pipeline, offline, from the committed raw snapshot
+        run: python src/pipeline.py --offline
+      - name: Committed numbers are exactly what the pipeline produces
+        run: git diff --exit-code -I '"generated_utc"' -- data/processed/metrics.json data/processed/benchmark.json data/processed/model_stats.json
