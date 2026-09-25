@@ -1,0 +1,38 @@
+[
+  {
+    "source": "ourairports",
+    "files": 1,
+    "rows": 86119,
+    "expected": ">= 50000",
+    "status": "ok"
+  },
+  {
+    "source": "open_meteo",
+    "files": 1,
+    "rows": 744,
+    "expected": 744,
+    "status": "ok"
+  },
+  {
+    "source": "dgca",
+    "files": 1,
+    "rows": 18,
+    "expected": "OTP section present",
+    "status": "ok"
+  },
+  {
+    "source": "opensky",
+    "files": 62,
+    "rows": 20549,
+    "expected": "31 days x 2 directions",
+    "status": "ok",
+    "flags": []
+  },
+  {
+    "source": "aviationstack",
+    "files": 22,
+    "rows": 1486,
+    "expected": "ledger 22/30",
+    "status": "ok"
+  }
+]

@@ -1,0 +1,1398 @@
+{
+  "data/raw/aviationstack/arr_BLR_6E_20260923T131349Z_off0000.json": {
+    "source": "aviationstack",
+    "url": "https://api.aviationstack.com/v1/flights",
+    "params": {
+      "access_key": "***",
+      "arr_iata": "BLR",
+      "airline_iata": "6E",
+      "limit": 100,
+      "offset": 0
+    },
+    "retrieved_at_utc": "2026-09-23T13:13:59Z",
+    "rows": 100,
+    "bytes": 99360,
+    "sha256": "1ea1a2c1ba29280754cbe5167008d650544eae2f6ced2207b456296c98ed865c",
+    "status": "ok",
+    "note": "pagination total=317"
+  },
+  "data/raw/aviationstack/arr_BLR_6E_20260923T131349Z_off0100.json": {
+    "source": "aviationstack",
+    "url": "https://api.aviationstack.com/v1/flights",
+    "params": {
+      "access_key": "***",
+      "arr_iata": "BLR",
+      "airline_iata": "6E",
+      "limit": 100,
+      "offset": 100
+    },
+    "retrieved_at_utc": "2026-09-23T13:14:00Z",
+    "rows": 100,
+    "bytes": 107010,
+    "sha256": "4983d6a059957ec3e24ef2d10ac50e22420641a8740e7aee6aa0b8f6269116b5",
+    "status": "ok",
+    "note": "pagination total=317"
+  },
+  "data/raw/aviationstack/arr_BLR_6E_20260923T131349Z_off0200.json": {
+    "source": "aviationstack",
+    "url": "https://api.aviationstack.com/v1/flights",
+    "params": {
+      "access_key": "***",
+      "arr_iata": "BLR",
+      "airline_iata": "6E",
+      "limit": 100,
+      "offset": 200
+    },
+    "retrieved_at_utc": "2026-09-23T13:14:01Z",
+    "rows": 100,
+    "bytes": 106873,
+    "sha256": "e67e5beffca92d4fd0d7ad5164f1afcb5aedfd762bb0c537c0eab1673044b958",
+    "status": "ok",
+    "note": "pagination total=317"
+  },
+  "data/raw/aviationstack/arr_BLR_6E_20260923T131349Z_off0300.json": {
+    "source": "aviationstack",
+    "url": "https://api.aviationstack.com/v1/flights",
+    "params": {
+      "access_key": "***",
+      "arr_iata": "BLR",
+      "airline_iata": "6E",
+      "limit": 100,
+      "offset": 300
+    },
+    "retrieved_at_utc": "2026-09-23T13:14:02Z",
+    "rows": 17,
+    "bytes": 18346,
+    "sha256": "d80ec9ecc84c8131eb5b03130654a3e3f1f5fa4b5bb17a1a2bd3d067a3fad179",
+    "status": "ok",
+    "note": "pagination total=317"
+  },
+  "data/raw/aviationstack/arr_BLR_9I_20260923T131421Z_off0000.json": {
+    "source": "aviationstack",
+    "url": "https://api.aviationstack.com/v1/flights",
+    "params": {
+      "access_key": "***",
+      "arr_iata": "BLR",
+      "airline_iata": "9I",
+      "limit": 100,
+      "offset": 0
+    },
+    "retrieved_at_utc": "2026-09-23T13:14:27Z",
+    "rows": 7,
+    "bytes": 7140,
+    "sha256": "fff277231872fa162d273dd9e3ea816d0b2c06495fac9a881d49f1f355fe8006",
+    "status": "ok",
+    "note": "pagination total=7"
+  },
+  "data/raw/aviationstack/arr_BLR_AI_20260923T131421Z_off0000.json": {
+    "source": "aviationstack",
+    "url": "https://api.aviationstack.com/v1/flights",
+    "params": {
+      "access_key": "***",
+      "arr_iata": "BLR",
+      "airline_iata": "AI",
+      "limit": 100,
+      "offset": 0
+    },
+    "retrieved_at_utc": "2026-09-23T13:14:24Z",
+    "rows": 100,
+    "bytes": 113165,
+    "sha256": "4b524fe3ab04c2f191f53a0ebda8963e68b3da08f433f8a417215bb850b3715b",
+    "status": "ok",
+    "note": "pagination total=189"
+  },
+  "data/raw/aviationstack/arr_BLR_AI_20260923T131421Z_off0100.json": {
+    "source": "aviationstack",
+    "url": "https://api.aviationstack.com/v1/flights",
+    "params": {
+      "access_key": "***",
+      "arr_iata": "BLR",
+      "airline_iata": "AI",
+      "limit": 100,
+      "offset": 100
+    },
+    "retrieved_at_utc": "2026-09-23T13:14:26Z",
+    "rows": 89,
+    "bytes": 104586,
+    "sha256": "3df44c9e24c70cff767722106dcc74cd38883ccc08dad1d9c8979a54ecb5efdc",
+    "status": "ok",
+    "note": "pagination total=189"
+  },
+  "data/raw/aviationstack/arr_BLR_IX_20260923T131349Z_off0000.json": {
+    "source": "aviationstack",
+    "url": "https://api.aviationstack.com/v1/flights",
+    "params": {
+      "access_key": "***",
+      "arr_iata": "BLR",
+      "airline_iata": "IX",
+      "limit": 100,
+      "offset": 0
+    },
+    "retrieved_at_utc": "2026-09-23T13:14:03Z",
+    "rows": 100,
+    "bytes": 104033,
+    "sha256": "521ff1f35190dd69c468fa733d1f4fe7ee2112a1cb4fc38b9adf84eb2145a71a",
+    "status": "ok",
+    "note": "pagination total=122"
+  },
+  "data/raw/aviationstack/arr_BLR_IX_20260923T131421Z_off0100.json": {
+    "source": "aviationstack",
+    "url": "https://api.aviationstack.com/v1/flights",
+    "params": {
+      "access_key": "***",
+      "arr_iata": "BLR",
+      "airline_iata": "IX",
+      "limit": 100,
+      "offset": 100
+    },
+    "retrieved_at_utc": "2026-09-23T13:14:23Z",
+    "rows": 22,
+    "bytes": 23439,
+    "sha256": "fcf0dd66f7162ad046c7b485fb37fde9ac5640e850484fb834a658148ba763d9",
+    "status": "ok",
+    "note": "pagination total=122"
+  },
+  "data/raw/aviationstack/arr_BLR_QP_20260923T131421Z_off0000.json": {
+    "source": "aviationstack",
+    "url": "https://api.aviationstack.com/v1/flights",
+    "params": {
+      "access_key": "***",
+      "arr_iata": "BLR",
+      "airline_iata": "QP",
+      "limit": 100,
+      "offset": 0
+    },
+    "retrieved_at_utc": "2026-09-23T13:14:27Z",
+    "rows": 60,
+    "bytes": 61726,
+    "sha256": "891013d1bfd9ea90474512adaf3105564fed91ad85add0c44c9de61aea3052b5",
+    "status": "ok",
+    "note": "pagination total=60"
+  },
+  "data/raw/aviationstack/dep_BLR_20260923T131202Z_off0000.json": {
+    "source": "aviationstack",
+    "url": "https://api.aviationstack.com/v1/flights",
+    "params": {
+      "access_key": "***",
+      "dep_iata": "BLR",
+      "limit": 100,
+      "offset": 0
+    },
+    "retrieved_at_utc": "2026-09-23T13:12:04Z",
+    "rows": 100,
+    "bytes": 105200,
+    "sha256": "ad361da39b745c53f2153741dd7cc8a70a2bf750cf5ace11144bd04eca0b353b",
+    "status": "ok",
+    "note": "pagination total=1696"
+  },
+  "data/raw/aviationstack/dep_BLR_6E_20260923T131349Z_off0000.json": {
+    "source": "aviationstack",
+    "url": "https://api.aviationstack.com/v1/flights",
+    "params": {
+      "access_key": "***",
+      "dep_iata": "BLR",
+      "airline_iata": "6E",
+      "limit": 100,
+      "offset": 0
+    },
+    "retrieved_at_utc": "2026-09-23T13:13:51Z",
+    "rows": 100,
+    "bytes": 100129,
+    "sha256": "ce0eb80e3e9eaf4d75c8f571bf14f20badb58bcd6efb100b763ac159085e185d",
+    "status": "ok",
+    "note": "pagination total=318"
+  },
+  "data/raw/aviationstack/dep_BLR_6E_20260923T131349Z_off0100.json": {
+    "source": "aviationstack",
+    "url": "https://api.aviationstack.com/v1/flights",
+    "params": {
+      "access_key": "***",
+      "dep_iata": "BLR",
+      "airline_iata": "6E",
+      "limit": 100,
+      "offset": 100
+    },
+    "retrieved_at_utc": "2026-09-23T13:13:52Z",
+    "rows": 100,
+    "bytes": 106669,
+    "sha256": "d3341ab93a3d55e50f1c76bb6f0f629d33b9b682af02da6fe95185684352fa21",
+    "status": "ok",
+    "note": "pagination total=318"
+  },
+  "data/raw/aviationstack/dep_BLR_6E_20260923T131349Z_off0200.json": {
+    "source": "aviationstack",
+    "url": "https://api.aviationstack.com/v1/flights",
+    "params": {
+      "access_key": "***",
+      "dep_iata": "BLR",
+      "airline_iata": "6E",
+      "limit": 100,
+      "offset": 200
+    },
+    "retrieved_at_utc": "2026-09-23T13:13:53Z",
+    "rows": 100,
+    "bytes": 105699,
+    "sha256": "d4eefb9b3abbed3198a5dee729d6768cbb9e17e0c23e69847abe50c3b1da2620",
+    "status": "ok",
+    "note": "pagination total=318"
+  },
+  "data/raw/aviationstack/dep_BLR_6E_20260923T131349Z_off0300.json": {
+    "source": "aviationstack",
+    "url": "https://api.aviationstack.com/v1/flights",
+    "params": {
+      "access_key": "***",
+      "dep_iata": "BLR",
+      "airline_iata": "6E",
+      "limit": 100,
+      "offset": 300
+    },
+    "retrieved_at_utc": "2026-09-23T13:13:53Z",
+    "rows": 18,
+    "bytes": 19399,
+    "sha256": "3eb29ab0325a1acbb480fe88d3593834419e04e95d77cc6fa7727c3e7c619c8d",
+    "status": "ok",
+    "note": "pagination total=318"
+  },
+  "data/raw/aviationstack/dep_BLR_9I_20260923T131349Z_off0000.json": {
+    "source": "aviationstack",
+    "url": "https://api.aviationstack.com/v1/flights",
+    "params": {
+      "access_key": "***",
+      "dep_iata": "BLR",
+      "airline_iata": "9I",
+      "limit": 100,
+      "offset": 0
+    },
+    "retrieved_at_utc": "2026-09-23T13:13:58Z",
+    "rows": 7,
+    "bytes": 7312,
+    "sha256": "4e7e5c0c85b2abff390d238a3e4c04f9ef90a54c9be58bb07bbe28f29b53258a",
+    "status": "ok",
+    "note": "pagination total=7"
+  },
+  "data/raw/aviationstack/dep_BLR_AI_20260923T131349Z_off0000.json": {
+    "source": "aviationstack",
+    "url": "https://api.aviationstack.com/v1/flights",
+    "params": {
+      "access_key": "***",
+      "dep_iata": "BLR",
+      "airline_iata": "AI",
+      "limit": 100,
+      "offset": 0
+    },
+    "retrieved_at_utc": "2026-09-23T13:13:56Z",
+    "rows": 100,
+    "bytes": 114459,
+    "sha256": "7d3d9cb8c12b8454bd67e32c5eff7b20ccad240f78c63d2227b648fdf16606e6",
+    "status": "ok",
+    "note": "pagination total=186"
+  },
+  "data/raw/aviationstack/dep_BLR_AI_20260923T131349Z_off0100.json": {
+    "source": "aviationstack",
+    "url": "https://api.aviationstack.com/v1/flights",
+    "params": {
+      "access_key": "***",
+      "dep_iata": "BLR",
+      "airline_iata": "AI",
+      "limit": 100,
+      "offset": 100
+    },
+    "retrieved_at_utc": "2026-09-23T13:13:57Z",
+    "rows": 86,
+    "bytes": 100580,
+    "sha256": "e69092ce4622b4d66ec73f7b3d4b6b5519b62d34896442270e893471d86cbbd8",
+    "status": "ok",
+    "note": "pagination total=186"
+  },
+  "data/raw/aviationstack/dep_BLR_IX_20260923T131349Z_off0000.json": {
+    "source": "aviationstack",
+    "url": "https://api.aviationstack.com/v1/flights",
+    "params": {
+      "access_key": "***",
+      "dep_iata": "BLR",
+      "airline_iata": "IX",
+      "limit": 100,
+      "offset": 0
+    },
+    "retrieved_at_utc": "2026-09-23T13:13:54Z",
+    "rows": 100,
+    "bytes": 104436,
+    "sha256": "6ef262c3e22f98406cfea8e0ed3e4314ab7931c7e7f1403855d71ae4f0a5de23",
+    "status": "ok",
+    "note": "pagination total=122"
+  },
+  "data/raw/aviationstack/dep_BLR_IX_20260923T131349Z_off0100.json": {
+    "source": "aviationstack",
+    "url": "https://api.aviationstack.com/v1/flights",
+    "params": {
+      "access_key": "***",
+      "dep_iata": "BLR",
+      "airline_iata": "IX",
+      "limit": 100,
+      "offset": 100
+    },
+    "retrieved_at_utc": "2026-09-23T13:13:55Z",
+    "rows": 22,
+    "bytes": 23556,
+    "sha256": "6267e2e68e21403ac92c6d86076cbef373f9f43b7cd93becfd9e651c982a2b35",
+    "status": "ok",
+    "note": "pagination total=122"
+  },
+  "data/raw/aviationstack/dep_BLR_QP_20260923T131349Z_off0000.json": {
+    "source": "aviationstack",
+    "url": "https://api.aviationstack.com/v1/flights",
+    "params": {
+      "access_key": "***",
+      "dep_iata": "BLR",
+      "airline_iata": "QP",
+      "limit": 100,
+      "offset": 0
+    },
+    "retrieved_at_utc": "2026-09-23T13:13:58Z",
+    "rows": 58,
+    "bytes": 60921,
+    "sha256": "c707e0e6e3f49bebca622d97d43531ab2861e73935a307fe2859d6691cdfcf2b",
+    "status": "ok",
+    "note": "pagination total=58"
+  },
+  "data/raw/aviationstack/dep_BLR_SG_20260923T131349Z_off0000.json": {
+    "source": "aviationstack",
+    "url": "https://api.aviationstack.com/v1/flights",
+    "params": {
+      "access_key": "***",
+      "dep_iata": "BLR",
+      "airline_iata": "SG",
+      "limit": 100,
+      "offset": 0
+    },
+    "retrieved_at_utc": "2026-09-23T13:13:58Z",
+    "rows": 0,
+    "bytes": 79,
+    "sha256": "031da46fe5b96c0e8eb1eb037eb06ae130869beae8ed00364800effac267f0c3",
+    "status": "ok",
+    "note": "pagination total=0"
+  },
+  "data/raw/dgca/dgca_air_traffic_listing_2026-09-23.json": {
+    "source": "dgca",
+    "url": "https://www.dgca.gov.in/digigov-portal/scan?",
+    "params": {
+      "baseLocale": "",
+      "screenId": "10000001",
+      "classification": "",
+      "actionVal": "viewStaticData",
+      "requestType": "ApplicationRH",
+      "attachId": "",
+      "langType": "1",
+      "attr": "",
+      "ruleBookId": "4264",
+      "contentId": "4206",
+      "serviceName": "fetchRulebookContentDtlsList"
+    },
+    "retrieved_at_utc": "2026-09-23T13:01:41Z",
+    "rows": 146,
+    "bytes": 37977,
+    "sha256": "9e3186e8fb40444e73d6796dac31dac6f12955d529ab400c7fc85f87cb40cf90",
+    "status": "ok",
+    "note": "DGCA 'Air Traffic' page listing (monthly domestic traffic reports)"
+  },
+  "data/raw/dgca/dgca_traffic_report_2026-08.pdf": {
+    "source": "dgca",
+    "url": "https://public-prd-dgca.s3.ap-south-1.amazonaws.com/InventoryList/dataReports/aviationDataStatistics/airTransport/domestic/airTraffic/traffic%20Data%20August%2026.pdf",
+    "params": {},
+    "retrieved_at_utc": "2026-09-23T13:01:41Z",
+    "rows": 18,
+    "bytes": 1547862,
+    "sha256": "67c985b5e8ee921e590ac744146396547035d0ec74bc2d64db41a24f0993f62f",
+    "status": "ok",
+    "note": "rows = PDF pages. Monthly domestic traffic report, 2026-08"
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-01.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1785522600,
+      "end": 1785608999
+    },
+    "retrieved_at_utc": "2026-09-23T13:10:49Z",
+    "rows": 330,
+    "bytes": 128182,
+    "sha256": "9ce99c25dcc6b5d58a9e120d099f0f2a835f8762eb131e85736627a9ef5b786e",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-02.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1785609000,
+      "end": 1785695399
+    },
+    "retrieved_at_utc": "2026-09-23T13:10:51Z",
+    "rows": 355,
+    "bytes": 137900,
+    "sha256": "f4b577b2041f6c0c9e4d517498a9bc6bb6ddfa54796f3db96fe301ebfcd5258a",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-03.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1785695400,
+      "end": 1785781799
+    },
+    "retrieved_at_utc": "2026-09-23T13:10:53Z",
+    "rows": 342,
+    "bytes": 132808,
+    "sha256": "b5ba2ea1d9b5a64f71775da689afe544c82525cc0e6afbce9a4e2a95256f3509",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-04.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1785781800,
+      "end": 1785868199
+    },
+    "retrieved_at_utc": "2026-09-23T13:10:55Z",
+    "rows": 327,
+    "bytes": 126991,
+    "sha256": "0bf2f39b0587ae7949dada3aa90b60dfcabb88b8e215d7e84ee32b667c0b1451",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-05.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1785868200,
+      "end": 1785954599
+    },
+    "retrieved_at_utc": "2026-09-23T13:10:57Z",
+    "rows": 339,
+    "bytes": 131657,
+    "sha256": "3d70ce1f13fe0e4a47aa95f6d6e48584ca029c70fbb26cfce405060d89f622bb",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-06.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1785954600,
+      "end": 1786040999
+    },
+    "retrieved_at_utc": "2026-09-23T13:10:59Z",
+    "rows": 336,
+    "bytes": 130489,
+    "sha256": "da53a07444c160d9563f1fcc2253c2e67eee137578bb5fa6e968d7d1d4cac87e",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-07.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1786041000,
+      "end": 1786127399
+    },
+    "retrieved_at_utc": "2026-09-23T13:11:01Z",
+    "rows": 341,
+    "bytes": 132448,
+    "sha256": "164dc6b2000ddbd9c8e7d1e6d67a722d3d406861229ca87955549b80aa723b29",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-08.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1786127400,
+      "end": 1786213799
+    },
+    "retrieved_at_utc": "2026-09-23T13:11:03Z",
+    "rows": 346,
+    "bytes": 134378,
+    "sha256": "5de6849dc2fbe44b9eb92b9fe96ee5e5321af26b6a30932c906cff3c76e5f59d",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-09.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1786213800,
+      "end": 1786300199
+    },
+    "retrieved_at_utc": "2026-09-23T13:11:05Z",
+    "rows": 341,
+    "bytes": 132431,
+    "sha256": "8af619fa64e00ba31baf12da8f9672a36bd727408135c29c96d4d580b73b843f",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-10.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1786300200,
+      "end": 1786386599
+    },
+    "retrieved_at_utc": "2026-09-23T13:11:07Z",
+    "rows": 340,
+    "bytes": 132064,
+    "sha256": "4e6b383691e5be8e18eee6d147863b1ceb89d4529096c56b9c19d1325c9392e3",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-11.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1786386600,
+      "end": 1786472999
+    },
+    "retrieved_at_utc": "2026-09-23T13:11:09Z",
+    "rows": 326,
+    "bytes": 126657,
+    "sha256": "8069ef95d25bc37a38dd0c46af37ae677c3686da6aeeeca2a2a746bfc60573bc",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-12.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1786473000,
+      "end": 1786559399
+    },
+    "retrieved_at_utc": "2026-09-23T13:11:11Z",
+    "rows": 335,
+    "bytes": 130160,
+    "sha256": "91c760c7722b739848ece6f8785e743709496b2889db216c779a7b149d09731b",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-13.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1786559400,
+      "end": 1786645799
+    },
+    "retrieved_at_utc": "2026-09-23T13:11:13Z",
+    "rows": 334,
+    "bytes": 129751,
+    "sha256": "7b423450d0eba97e4204f1326ed3cd58491a6c73d9167960ade10b145f043ce4",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-14.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1786645800,
+      "end": 1786732199
+    },
+    "retrieved_at_utc": "2026-09-23T13:11:15Z",
+    "rows": 332,
+    "bytes": 128961,
+    "sha256": "98fb442b9ec8e7b16b7b9dbd648a82a8b4d9c284a694b058b2c5778a9bfb5d96",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-15.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1786732200,
+      "end": 1786818599
+    },
+    "retrieved_at_utc": "2026-09-23T13:11:17Z",
+    "rows": 340,
+    "bytes": 132077,
+    "sha256": "3dd9051652c886a9c922f7d27a28ed26dd7d0e6f380f77a1e90b86408e2bf337",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-16.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1786818600,
+      "end": 1786904999
+    },
+    "retrieved_at_utc": "2026-09-23T13:11:20Z",
+    "rows": 327,
+    "bytes": 127023,
+    "sha256": "7e42721d4d31036a63dcadd50603bbefcb36720e3b742d8e4609c0d3617c3eec",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-17.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1786905000,
+      "end": 1786991399
+    },
+    "retrieved_at_utc": "2026-09-23T13:11:21Z",
+    "rows": 328,
+    "bytes": 127381,
+    "sha256": "59bbcca94536cf9a8662b07b26ffc25027a370e23e4b623d368e39fc47aeb60f",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-18.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1786991400,
+      "end": 1787077799
+    },
+    "retrieved_at_utc": "2026-09-23T13:11:24Z",
+    "rows": 321,
+    "bytes": 124677,
+    "sha256": "2a601edf1050a97e4850c95e5be67e00533dae30a60036f42daab705e5078a60",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-19.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1787077800,
+      "end": 1787164199
+    },
+    "retrieved_at_utc": "2026-09-23T13:11:25Z",
+    "rows": 330,
+    "bytes": 128166,
+    "sha256": "f806ea89beee828ce553dae0a7ff5922e1a042f84796ceddf7bd61839e56205f",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-20.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1787164200,
+      "end": 1787250599
+    },
+    "retrieved_at_utc": "2026-09-23T13:11:27Z",
+    "rows": 325,
+    "bytes": 126260,
+    "sha256": "2c5a669d58f1a20d6541a7acf081f694ef42502c096205434df348a9644f1427",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-21.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1787250600,
+      "end": 1787336999
+    },
+    "retrieved_at_utc": "2026-09-23T13:11:31Z",
+    "rows": 332,
+    "bytes": 128951,
+    "sha256": "2c68c2b13b667855ce8e7bfe5b87b7ecb7348d32931f38d924d7ed26cc2ba552",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-22.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1787337000,
+      "end": 1787423399
+    },
+    "retrieved_at_utc": "2026-09-23T13:11:33Z",
+    "rows": 338,
+    "bytes": 131310,
+    "sha256": "f3e1fa80981fe17c21f0993b5aafaae4d56b147bf5f302de9d88d5231676d98c",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-23.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1787423400,
+      "end": 1787509799
+    },
+    "retrieved_at_utc": "2026-09-23T13:11:36Z",
+    "rows": 352,
+    "bytes": 136693,
+    "sha256": "36ca91c3dfd3d8092d7218ddbea70e4f43e39ce9905cab718f4b170ddd89c2d3",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-24.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1787509800,
+      "end": 1787596199
+    },
+    "retrieved_at_utc": "2026-09-23T13:11:38Z",
+    "rows": 337,
+    "bytes": 130912,
+    "sha256": "318a8cbd43a758f85539e1ecc800a27117142941c7750d44934db9abea214a54",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-25.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1787596200,
+      "end": 1787682599
+    },
+    "retrieved_at_utc": "2026-09-23T13:11:39Z",
+    "rows": 330,
+    "bytes": 128175,
+    "sha256": "4b1969d4dd393f4af0abf5eed3308d4041edbd4d3d66012540381bee0788f149",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-26.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1787682600,
+      "end": 1787768999
+    },
+    "retrieved_at_utc": "2026-09-23T13:11:42Z",
+    "rows": 312,
+    "bytes": 121250,
+    "sha256": "923c9210de36a1d1e35e2fbc3efe27f810f5ae553351dcdb6b8e7bac5903ded2",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-27.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1787769000,
+      "end": 1787855399
+    },
+    "retrieved_at_utc": "2026-09-23T13:11:44Z",
+    "rows": 344,
+    "bytes": 133700,
+    "sha256": "d92395ce6b76a41878e18e4e0b060ee0bcdd71154bce9ce01fa5c39ca83ca463",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-28.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1787855400,
+      "end": 1787941799
+    },
+    "retrieved_at_utc": "2026-09-23T13:11:46Z",
+    "rows": 331,
+    "bytes": 128603,
+    "sha256": "b5acdd94a2602141ba664b66a5e7b34144d930df0b8143f33d0bdf3f35adc1cf",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-29.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1787941800,
+      "end": 1788028199
+    },
+    "retrieved_at_utc": "2026-09-23T13:11:48Z",
+    "rows": 339,
+    "bytes": 131714,
+    "sha256": "0859cccb3c383311168fc37c3f0334dfa27a4bd57a569ecbdc97aa3ad217b1a3",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-30.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1788028200,
+      "end": 1788114599
+    },
+    "retrieved_at_utc": "2026-09-23T13:11:50Z",
+    "rows": 351,
+    "bytes": 136338,
+    "sha256": "3580d37484e33e3d21eee95640a50e526d8db5b3749fab651e77866785416360",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-08-31.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1788114600,
+      "end": 1788200999
+    },
+    "retrieved_at_utc": "2026-09-23T13:11:52Z",
+    "rows": 331,
+    "bytes": 128604,
+    "sha256": "baec5f1a0512f57ebcd1cb3091639925207664bfc205a8f719299163be41c47a",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/arrival/VOBL_2026-09-22.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/arrival",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1790015400,
+      "end": 1790101799
+    },
+    "retrieved_at_utc": "2026-09-23T13:15:17Z",
+    "rows": 323,
+    "bytes": 125424,
+    "sha256": "21591cafe92f19396e36e94a3b0c16bd073c8354c566405558aabbdce471c51c",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-01.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1785522600,
+      "end": 1785608999
+    },
+    "retrieved_at_utc": "2026-09-23T13:09:39Z",
+    "rows": 330,
+    "bytes": 128224,
+    "sha256": "d1081b87527554dfcb4bd316802a68cb7b58811e61b8ba3ce9f483354d161f24",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-02.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1785609000,
+      "end": 1785695399
+    },
+    "retrieved_at_utc": "2026-09-23T13:09:42Z",
+    "rows": 338,
+    "bytes": 131359,
+    "sha256": "4196b1407c72be8ff7bb534e4a0a5231b2119dfdd55ea7728c3fa10fa85a0160",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-03.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1785695400,
+      "end": 1785781799
+    },
+    "retrieved_at_utc": "2026-09-23T13:09:43Z",
+    "rows": 327,
+    "bytes": 127033,
+    "sha256": "9f6afa0bd0d2c78402aa786dc739ec5ab2c8fc3c8704068f31bf511eb88b1f84",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-04.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1785781800,
+      "end": 1785868199
+    },
+    "retrieved_at_utc": "2026-09-23T13:09:45Z",
+    "rows": 314,
+    "bytes": 121977,
+    "sha256": "3cdeac702e768edb98a151be0c0edb12908dcc4c76c1f4fb4a4b582013b5ae0e",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-05.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1785868200,
+      "end": 1785954599
+    },
+    "retrieved_at_utc": "2026-09-23T13:09:48Z",
+    "rows": 319,
+    "bytes": 123962,
+    "sha256": "e5c4da8751899899c4bba601687283d95f9c7271130e9db727830df9f753b299",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-06.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1785954600,
+      "end": 1786040999
+    },
+    "retrieved_at_utc": "2026-09-23T13:09:50Z",
+    "rows": 336,
+    "bytes": 130548,
+    "sha256": "3d4ce8e094db361c3b0da0411b3914b535a9c3314819d567667853362e55b77d",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-07.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1786041000,
+      "end": 1786127399
+    },
+    "retrieved_at_utc": "2026-09-23T13:09:52Z",
+    "rows": 332,
+    "bytes": 129006,
+    "sha256": "2e96268ef2e15dc487f01d64ef714ad89c00e8bc698506532973d32454de3a5c",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-08.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1786127400,
+      "end": 1786213799
+    },
+    "retrieved_at_utc": "2026-09-23T13:09:55Z",
+    "rows": 333,
+    "bytes": 129377,
+    "sha256": "d678d290556474e71df3f48f67dfb3a2e1a4230c7bfe09197437b24bbd573a4d",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-09.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1786213800,
+      "end": 1786300199
+    },
+    "retrieved_at_utc": "2026-09-23T13:09:57Z",
+    "rows": 334,
+    "bytes": 129788,
+    "sha256": "11bdfa524ed38048f0286ad5cf48b947e2b5676640e0f3046ea0a7b96cd3f2b3",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-10.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1786300200,
+      "end": 1786386599
+    },
+    "retrieved_at_utc": "2026-09-23T13:09:58Z",
+    "rows": 332,
+    "bytes": 128998,
+    "sha256": "7c6e5e2d247e2a9f905549e8a8c814eb697795a3927cd7bf23cab721d1bdeb6b",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-11.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1786386600,
+      "end": 1786472999
+    },
+    "retrieved_at_utc": "2026-09-23T13:10:01Z",
+    "rows": 318,
+    "bytes": 123566,
+    "sha256": "97f5c2bd545cc281c00c5816c23bb65a41448e7ccf3c9b8dc9ed1f29f6eeb9f7",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-12.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1786473000,
+      "end": 1786559399
+    },
+    "retrieved_at_utc": "2026-09-23T13:10:03Z",
+    "rows": 330,
+    "bytes": 128236,
+    "sha256": "22cc944110aeb05a1182bff3dfba27f2a1eba7659131b9a5e1eec7dfe1be3115",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-13.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1786559400,
+      "end": 1786645799
+    },
+    "retrieved_at_utc": "2026-09-23T13:10:05Z",
+    "rows": 341,
+    "bytes": 132496,
+    "sha256": "0e544cd6fa972a1df11fdf1a3669c0bddb567295dcc4af756f59911e51c6f590",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-14.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1786645800,
+      "end": 1786732199
+    },
+    "retrieved_at_utc": "2026-09-23T13:10:07Z",
+    "rows": 342,
+    "bytes": 132883,
+    "sha256": "1ace351cfe4a0c2121a35da34635206983d3b71332081bc3bd385d2476a67b0f",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-15.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1786732200,
+      "end": 1786818599
+    },
+    "retrieved_at_utc": "2026-09-23T13:10:11Z",
+    "rows": 330,
+    "bytes": 128221,
+    "sha256": "c100c49ba3587ccad02c11a4de8bb3eb08af5340825ebb6588b1815e941dc5db",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-16.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1786818600,
+      "end": 1786904999
+    },
+    "retrieved_at_utc": "2026-09-23T13:10:15Z",
+    "rows": 328,
+    "bytes": 127441,
+    "sha256": "239b0a6c726f8d7a0234130a810380d6f22d6af618f0b5166e5fa9bfad55179b",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-17.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1786905000,
+      "end": 1786991399
+    },
+    "retrieved_at_utc": "2026-09-23T13:10:17Z",
+    "rows": 318,
+    "bytes": 123548,
+    "sha256": "8852ea4da81bbe967183a99bb26fabb5e38be75841824a0767781a2015655ce3",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-18.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1786991400,
+      "end": 1787077799
+    },
+    "retrieved_at_utc": "2026-09-23T13:10:19Z",
+    "rows": 317,
+    "bytes": 123146,
+    "sha256": "7f9ee5a6cfc3273fd191e56a25290e397e0c19150a4a0a2eb4c748be9f70e855",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-19.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1787077800,
+      "end": 1787164199
+    },
+    "retrieved_at_utc": "2026-09-23T13:10:21Z",
+    "rows": 328,
+    "bytes": 127435,
+    "sha256": "851f571ab8ff2295f67189ca81434fdf49ac412f158c3e83e07e6eac0e0f49cb",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-20.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1787164200,
+      "end": 1787250599
+    },
+    "retrieved_at_utc": "2026-09-23T13:10:23Z",
+    "rows": 319,
+    "bytes": 123950,
+    "sha256": "a77f36f6f84272326aec82ce9b4c194376b95af2d77fa9f1b04848c817b15ba2",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-21.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1787250600,
+      "end": 1787336999
+    },
+    "retrieved_at_utc": "2026-09-23T13:10:25Z",
+    "rows": 331,
+    "bytes": 128618,
+    "sha256": "ae9b0933b4074eed83339ddebd660d49c77c04d80450474628ecbf5696bf331a",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-22.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1787337000,
+      "end": 1787423399
+    },
+    "retrieved_at_utc": "2026-09-23T13:10:29Z",
+    "rows": 329,
+    "bytes": 127839,
+    "sha256": "fc282c0d939ab21fabe24817213711765b42a40d7ace5fdb22675d36c62b113a",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-23.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1787423400,
+      "end": 1787509799
+    },
+    "retrieved_at_utc": "2026-09-23T13:10:31Z",
+    "rows": 338,
+    "bytes": 131334,
+    "sha256": "b26bba601b0ec1cc935fba9e5fce5b64fad1909d04bf9cdabc4e9482c5e6d39a",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-24.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1787509800,
+      "end": 1787596199
+    },
+    "retrieved_at_utc": "2026-09-23T13:10:33Z",
+    "rows": 324,
+    "bytes": 125839,
+    "sha256": "ed036dce799be32485533856576e34a44f30d6cf8f6ee55d22d3d35f195bd3f2",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-25.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1787596200,
+      "end": 1787682599
+    },
+    "retrieved_at_utc": "2026-09-23T13:10:35Z",
+    "rows": 333,
+    "bytes": 129357,
+    "sha256": "1f54d0b08d4c7e6c3a1cf40d6ca61721f33e13a030489360352a56fe357c5526",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-26.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1787682600,
+      "end": 1787768999
+    },
+    "retrieved_at_utc": "2026-09-23T13:10:37Z",
+    "rows": 293,
+    "bytes": 113838,
+    "sha256": "a4cc39db2b6bd68c9cb27f74890dd87b8ceb934dfa0a6e03a363c775f219f2da",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-27.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1787769000,
+      "end": 1787855399
+    },
+    "retrieved_at_utc": "2026-09-23T13:10:39Z",
+    "rows": 336,
+    "bytes": 130559,
+    "sha256": "930818e3f2ef37382934c9b873c9919a400e69e6d61456629d3e016fb27f7bfb",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-28.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1787855400,
+      "end": 1787941799
+    },
+    "retrieved_at_utc": "2026-09-23T13:10:41Z",
+    "rows": 321,
+    "bytes": 124689,
+    "sha256": "383b4e80f424497354675ee508a00336f267d402e4e4425a72900e7b53ec2e7a",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-29.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1787941800,
+      "end": 1788028199
+    },
+    "retrieved_at_utc": "2026-09-23T13:10:43Z",
+    "rows": 330,
+    "bytes": 128215,
+    "sha256": "2bb90ad31258e6959c3fce2bc5e8129e577e222c43c8f97fdbccefc127e6d88e",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-30.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1788028200,
+      "end": 1788114599
+    },
+    "retrieved_at_utc": "2026-09-23T13:10:45Z",
+    "rows": 341,
+    "bytes": 132488,
+    "sha256": "07cf7e76fa6f6ef468b5ed947bf9f8c5be7a9cffe3584cbaa4f9d5d7f9508204",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-08-31.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1788114600,
+      "end": 1788200999
+    },
+    "retrieved_at_utc": "2026-09-23T13:10:47Z",
+    "rows": 315,
+    "bytes": 122398,
+    "sha256": "e1c11bee7202b441426ae76a39c0707c136bb66b2b9bd68bb5bad769c74e2503",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/opensky/departure/VOBL_2026-09-22.json": {
+    "source": "opensky",
+    "url": "https://opensky-network.org/api/flights/departure",
+    "params": {
+      "airport": "VOBL",
+      "begin": 1790015400,
+      "end": 1790101799
+    },
+    "retrieved_at_utc": "2026-09-23T13:15:15Z",
+    "rows": 311,
+    "bytes": 120774,
+    "sha256": "da9191ad2db8b40b9be4e96f4c043f40b47ab69e058c26441d907fe5d83f5ba8",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/ourairports/airports.csv": {
+    "source": "ourairports",
+    "url": "https://davidmegginson.github.io/ourairports-data/airports.csv",
+    "params": {},
+    "retrieved_at_utc": "2026-09-23T13:01:39Z",
+    "rows": 86119,
+    "bytes": 12728855,
+    "sha256": "afee98cc969c6564a76807bee54859e0727b7b4e68421c0ab05967cd0c5a76ea",
+    "status": "ok",
+    "note": ""
+  },
+  "data/raw/weather/open_meteo_VOBL_2026-08-01_2026-08-31.json": {
+    "source": "open_meteo",
+    "url": "https://historical-forecast-api.open-meteo.com/v1/forecast",
+    "params": {
+      "latitude": 13.1979,
+      "longitude": 77.706299,
+      "start_date": "2026-08-01",
+      "end_date": "2026-08-31",
+      "hourly": "precipitation,rain,wind_speed_10m,wind_gusts_10m,visibility,weather_code",
+      "timezone": "Asia/Kolkata"
+    },
+    "retrieved_at_utc": "2026-09-23T13:01:40Z",
+    "rows": 744,
+    "bytes": 40790,
+    "sha256": "7b9f5823c22cded878e1fe548b8d60b0e4d06d949a1b9c8e4cb8a4942fd2b1f2",
+    "status": "ok",
+    "note": ""
+  }
+}

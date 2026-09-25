@@ -1,0 +1,312 @@
+{
+  "cap": 30,
+  "calls": [
+    {
+      "n": 1,
+      "at_utc": "2026-09-23T13:12:02+00:00",
+      "params": {
+        "dep_iata": "BLR",
+        "limit": 100,
+        "offset": 0
+      },
+      "status": "ok",
+      "rows": 100,
+      "pagination_total": 1696,
+      "file": "dep_BLR_20260923T131202Z_off0000.json"
+    },
+    {
+      "n": 2,
+      "at_utc": "2026-09-23T13:13:49+00:00",
+      "params": {
+        "dep_iata": "BLR",
+        "airline_iata": "6E",
+        "limit": 100,
+        "offset": 0
+      },
+      "status": "ok",
+      "rows": 100,
+      "pagination_total": 318,
+      "file": "dep_BLR_6E_20260923T131349Z_off0000.json"
+    },
+    {
+      "n": 3,
+      "at_utc": "2026-09-23T13:13:51+00:00",
+      "params": {
+        "dep_iata": "BLR",
+        "airline_iata": "6E",
+        "limit": 100,
+        "offset": 100
+      },
+      "status": "ok",
+      "rows": 100,
+      "pagination_total": 318,
+      "file": "dep_BLR_6E_20260923T131349Z_off0100.json"
+    },
+    {
+      "n": 4,
+      "at_utc": "2026-09-23T13:13:52+00:00",
+      "params": {
+        "dep_iata": "BLR",
+        "airline_iata": "6E",
+        "limit": 100,
+        "offset": 200
+      },
+      "status": "ok",
+      "rows": 100,
+      "pagination_total": 318,
+      "file": "dep_BLR_6E_20260923T131349Z_off0200.json"
+    },
+    {
+      "n": 5,
+      "at_utc": "2026-09-23T13:13:53+00:00",
+      "params": {
+        "dep_iata": "BLR",
+        "airline_iata": "6E",
+        "limit": 100,
+        "offset": 300
+      },
+      "status": "ok",
+      "rows": 18,
+      "pagination_total": 318,
+      "file": "dep_BLR_6E_20260923T131349Z_off0300.json"
+    },
+    {
+      "n": 6,
+      "at_utc": "2026-09-23T13:13:53+00:00",
+      "params": {
+        "dep_iata": "BLR",
+        "airline_iata": "IX",
+        "limit": 100,
+        "offset": 0
+      },
+      "status": "ok",
+      "rows": 100,
+      "pagination_total": 122,
+      "file": "dep_BLR_IX_20260923T131349Z_off0000.json"
+    },
+    {
+      "n": 7,
+      "at_utc": "2026-09-23T13:13:54+00:00",
+      "params": {
+        "dep_iata": "BLR",
+        "airline_iata": "IX",
+        "limit": 100,
+        "offset": 100
+      },
+      "status": "ok",
+      "rows": 22,
+      "pagination_total": 122,
+      "file": "dep_BLR_IX_20260923T131349Z_off0100.json"
+    },
+    {
+      "n": 8,
+      "at_utc": "2026-09-23T13:13:55+00:00",
+      "params": {
+        "dep_iata": "BLR",
+        "airline_iata": "AI",
+        "limit": 100,
+        "offset": 0
+      },
+      "status": "ok",
+      "rows": 100,
+      "pagination_total": 186,
+      "file": "dep_BLR_AI_20260923T131349Z_off0000.json"
+    },
+    {
+      "n": 9,
+      "at_utc": "2026-09-23T13:13:56+00:00",
+      "params": {
+        "dep_iata": "BLR",
+        "airline_iata": "AI",
+        "limit": 100,
+        "offset": 100
+      },
+      "status": "ok",
+      "rows": 86,
+      "pagination_total": 186,
+      "file": "dep_BLR_AI_20260923T131349Z_off0100.json"
+    },
+    {
+      "n": 10,
+      "at_utc": "2026-09-23T13:13:57+00:00",
+      "params": {
+        "dep_iata": "BLR",
+        "airline_iata": "QP",
+        "limit": 100,
+        "offset": 0
+      },
+      "status": "ok",
+      "rows": 58,
+      "pagination_total": 58,
+      "file": "dep_BLR_QP_20260923T131349Z_off0000.json"
+    },
+    {
+      "n": 11,
+      "at_utc": "2026-09-23T13:13:58+00:00",
+      "params": {
+        "dep_iata": "BLR",
+        "airline_iata": "9I",
+        "limit": 100,
+        "offset": 0
+      },
+      "status": "ok",
+      "rows": 7,
+      "pagination_total": 7,
+      "file": "dep_BLR_9I_20260923T131349Z_off0000.json"
+    },
+    {
+      "n": 12,
+      "at_utc": "2026-09-23T13:13:58+00:00",
+      "params": {
+        "dep_iata": "BLR",
+        "airline_iata": "SG",
+        "limit": 100,
+        "offset": 0
+      },
+      "status": "ok",
+      "rows": 0,
+      "pagination_total": 0,
+      "file": "dep_BLR_SG_20260923T131349Z_off0000.json"
+    },
+    {
+      "n": 13,
+      "at_utc": "2026-09-23T13:13:58+00:00",
+      "params": {
+        "arr_iata": "BLR",
+        "airline_iata": "6E",
+        "limit": 100,
+        "offset": 0
+      },
+      "status": "ok",
+      "rows": 100,
+      "pagination_total": 317,
+      "file": "arr_BLR_6E_20260923T131349Z_off0000.json"
+    },
+    {
+      "n": 14,
+      "at_utc": "2026-09-23T13:13:59+00:00",
+      "params": {
+        "arr_iata": "BLR",
+        "airline_iata": "6E",
+        "limit": 100,
+        "offset": 100
+      },
+      "status": "ok",
+      "rows": 100,
+      "pagination_total": 317,
+      "file": "arr_BLR_6E_20260923T131349Z_off0100.json"
+    },
+    {
+      "n": 15,
+      "at_utc": "2026-09-23T13:14:00+00:00",
+      "params": {
+        "arr_iata": "BLR",
+        "airline_iata": "6E",
+        "limit": 100,
+        "offset": 200
+      },
+      "status": "ok",
+      "rows": 100,
+      "pagination_total": 317,
+      "file": "arr_BLR_6E_20260923T131349Z_off0200.json"
+    },
+    {
+      "n": 16,
+      "at_utc": "2026-09-23T13:14:01+00:00",
+      "params": {
+        "arr_iata": "BLR",
+        "airline_iata": "6E",
+        "limit": 100,
+        "offset": 300
+      },
+      "status": "ok",
+      "rows": 17,
+      "pagination_total": 317,
+      "file": "arr_BLR_6E_20260923T131349Z_off0300.json"
+    },
+    {
+      "n": 17,
+      "at_utc": "2026-09-23T13:14:02+00:00",
+      "params": {
+        "arr_iata": "BLR",
+        "airline_iata": "IX",
+        "limit": 100,
+        "offset": 0
+      },
+      "status": "ok",
+      "rows": 100,
+      "pagination_total": 122,
+      "file": "arr_BLR_IX_20260923T131349Z_off0000.json"
+    },
+    {
+      "n": 18,
+      "at_utc": "2026-09-23T13:14:21+00:00",
+      "params": {
+        "arr_iata": "BLR",
+        "airline_iata": "IX",
+        "limit": 100,
+        "offset": 100
+      },
+      "status": "ok",
+      "rows": 22,
+      "pagination_total": 122,
+      "file": "arr_BLR_IX_20260923T131421Z_off0100.json"
+    },
+    {
+      "n": 19,
+      "at_utc": "2026-09-23T13:14:23+00:00",
+      "params": {
+        "arr_iata": "BLR",
+        "airline_iata": "AI",
+        "limit": 100,
+        "offset": 0
+      },
+      "status": "ok",
+      "rows": 100,
+      "pagination_total": 189,
+      "file": "arr_BLR_AI_20260923T131421Z_off0000.json"
+    },
+    {
+      "n": 20,
+      "at_utc": "2026-09-23T13:14:24+00:00",
+      "params": {
+        "arr_iata": "BLR",
+        "airline_iata": "AI",
+        "limit": 100,
+        "offset": 100
+      },
+      "status": "ok",
+      "rows": 89,
+      "pagination_total": 189,
+      "file": "arr_BLR_AI_20260923T131421Z_off0100.json"
+    },
+    {
+      "n": 21,
+      "at_utc": "2026-09-23T13:14:26+00:00",
+      "params": {
+        "arr_iata": "BLR",
+        "airline_iata": "QP",
+        "limit": 100,
+        "offset": 0
+      },
+      "status": "ok",
+      "rows": 60,
+      "pagination_total": 60,
+      "file": "arr_BLR_QP_20260923T131421Z_off0000.json"
+    },
+    {
+      "n": 22,
+      "at_utc": "2026-09-23T13:14:27+00:00",
+      "params": {
+        "arr_iata": "BLR",
+        "airline_iata": "9I",
+        "limit": 100,
+        "offset": 0
+      },
+      "status": "ok",
+      "rows": 7,
+      "pagination_total": 7,
+      "file": "arr_BLR_9I_20260923T131421Z_off0000.json"
+    }
+  ]
+}
