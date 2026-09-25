@@ -1,0 +1,398 @@
+{
+  "context": {
+    "dgca_blr_pct": 92.0,
+    "benchmark_month": "2026-08",
+    "tz_check": {
+      "n": 483,
+      "median_diff_if_ist_min": 0.9,
+      "median_diff_if_utc_min": -329.1,
+      "iqr_min": 3.0,
+      "by_direction": {
+        "ARR": -1.6,
+        "DEP": 1.4
+      },
+      "match_rate": {
+        "DEP": 0.935,
+        "ARR": 0.859
+      }
+    },
+    "coverage": {
+      "direct_pct": 43.8,
+      "with_xwalk_pct": 76.7,
+      "unmatched_pct": 23.3
+    }
+  },
+  "dgca_national_reactionary_pct": 65.0,
+  "retimed": {
+    "flight_codes": 20,
+    "legs": 429,
+    "legs_by_group": {
+      "Air India Group": 365,
+      "Alliance Air": 21,
+      "IndiGo": 43
+    },
+    "by_reason": {
+      "large offset": 15,
+      "stable offset; on time in schedule sample": 4,
+      "early offset": 1
+    },
+    "otp_if_included_pct": 88.2
+  },
+  "generated_utc": "2026-09-24 00:08 UTC",
+  "window": {
+    "start": "2026-08-01",
+    "end": "2026-08-31"
+  },
+  "airport": "BLR",
+  "threshold_min": 15,
+  "coverage": [
+    {
+      "direction": "ARR",
+      "legs": 10392,
+      "in_kpi": 5966,
+      "with_schedule": 6482
+    },
+    {
+      "direction": "DEP",
+      "legs": 10157,
+      "in_kpi": 6430,
+      "with_schedule": 6824
+    }
+  ],
+  "m1_otp": {
+    "value_pct": 91.6,
+    "n": 6430,
+    "delayed": 539,
+    "sql_check_pct": 91.6
+  },
+  "m2_dep_delay": {
+    "mean_min": 0.3,
+    "median_min": -4.6,
+    "p90_min": 12.6,
+    "mean_of_delayed_min": 60.0,
+    "n": 6430
+  },
+  "m3_arr_delay": {
+    "mean_min": -3.4,
+    "median_min": -12.0,
+    "p90_min": 17.4,
+    "on_time_pct": 89.0,
+    "n": 5966
+  },
+  "m4_turnaround": {
+    "median_runway_to_runway_min": 107.6,
+    "n": 9276,
+    "median_gate_equiv_min": 84.6,
+    "median_scheduled_ground_min": 75.0,
+    "median_overrun_vs_schedule_min": 9.3,
+    "pct_turns_over_schedule": 72.2,
+    "n_with_schedule": 4765
+  },
+  "m5_weather": {
+    "value_pct": 17.8,
+    "delayed_n": 539,
+    "delayed_exposed_n": 96,
+    "share_of_all_departures_exposed_pct": 9.2,
+    "otp_when_exposed_pct": 83.7,
+    "otp_when_clear_pct": 92.4,
+    "adverse_hours": 38,
+    "hours_in_window": 744
+  },
+  "attribution": {
+    "ground-side / other": {
+      "n": 319,
+      "pct": 59.2
+    },
+    "reactionary (inbound late)": {
+      "n": 153,
+      "pct": 28.4
+    },
+    "weather-exposed": {
+      "n": 67,
+      "pct": 12.4
+    }
+  },
+  "attribution_by_group": {
+    "Air India Group": {
+      "ground-side / other": 82,
+      "reactionary (inbound late)": 78,
+      "weather-exposed": 13
+    },
+    "Akasa Air": {
+      "ground-side / other": 19,
+      "reactionary (inbound late)": 2,
+      "weather-exposed": 1
+    },
+    "Alliance Air": {
+      "ground-side / other": 9,
+      "reactionary (inbound late)": 6,
+      "weather-exposed": 0
+    },
+    "IndiGo": {
+      "ground-side / other": 190,
+      "reactionary (inbound late)": 54,
+      "weather-exposed": 53
+    },
+    "Other": {
+      "ground-side / other": 19,
+      "reactionary (inbound late)": 13,
+      "weather-exposed": 0
+    }
+  },
+  "delay_profile_by_group": {
+    "Air India Group": {
+      "departures": 1509,
+      "per100": {
+        "ground-side / other": 5.4,
+        "reactionary (inbound late)": 5.2,
+        "weather-exposed": 0.9
+      },
+      "inbound_late_pct": 15.1,
+      "inbound_known": 923,
+      "median_sched_turn_min": 85.0
+    },
+    "Akasa Air": {
+      "departures": 464,
+      "per100": {
+        "ground-side / other": 4.1,
+        "reactionary (inbound late)": 0.4,
+        "weather-exposed": 0.2
+      },
+      "inbound_late_pct": 10.7,
+      "inbound_known": 253,
+      "median_sched_turn_min": 220.0
+    },
+    "Alliance Air": {
+      "departures": 69,
+      "per100": {
+        "ground-side / other": 13.0,
+        "reactionary (inbound late)": 8.7
+      },
+      "inbound_late_pct": 23.8,
+      "inbound_known": 63,
+      "median_sched_turn_min": 35.0
+    },
+    "IndiGo": {
+      "departures": 4187,
+      "per100": {
+        "ground-side / other": 4.5,
+        "reactionary (inbound late)": 1.3,
+        "weather-exposed": 1.3
+      },
+      "inbound_late_pct": 7.1,
+      "inbound_known": 3050,
+      "median_sched_turn_min": 65.0
+    },
+    "Other": {
+      "departures": 201,
+      "per100": {
+        "ground-side / other": 9.5,
+        "reactionary (inbound late)": 6.5
+      },
+      "inbound_late_pct": null,
+      "inbound_known": 0,
+      "median_sched_turn_min": null
+    }
+  },
+  "otp_by_group": [
+    {
+      "grp": "IndiGo",
+      "n": 4187,
+      "otp_pct": 92.9,
+      "avg_delay_min": -0.7
+    },
+    {
+      "grp": "Air India Group",
+      "n": 1509,
+      "otp_pct": 88.5,
+      "avg_delay_min": 1.0
+    },
+    {
+      "grp": "Akasa Air",
+      "n": 464,
+      "otp_pct": 95.3,
+      "avg_delay_min": 1.3
+    },
+    {
+      "grp": "Other",
+      "n": 201,
+      "otp_pct": 84.1,
+      "avg_delay_min": 6.6
+    },
+    {
+      "grp": "Alliance Air",
+      "n": 69,
+      "otp_pct": 78.3,
+      "avg_delay_min": 19.3
+    }
+  ],
+  "otp_by_schedule_source": {
+    "callsign_map": {
+      "n": 2723,
+      "otp_pct": 93.2
+    },
+    "flight_code": {
+      "n": 3707,
+      "otp_pct": 90.4
+    }
+  },
+  "sensitivity_taxi_out": [
+    {
+      "taxi_out_min": 0,
+      "otp_pct": 67.2,
+      "attribution_pct": {
+        "ground-side / other": 81.1,
+        "weather-exposed": 11.6,
+        "reactionary (inbound late)": 7.3
+      },
+      "ranking": [
+        "IndiGo",
+        "Air India Group",
+        "Akasa Air",
+        "Alliance Air"
+      ],
+      "otp_by_group": {
+        "IndiGo": 69.6,
+        "Air India Group": 69.1,
+        "Akasa Air": 50.0,
+        "Alliance Air": 37.7
+      }
+    },
+    {
+      "taxi_out_min": 5,
+      "otp_pct": 80.2,
+      "attribution_pct": {
+        "ground-side / other": 75.0,
+        "weather-exposed": 12.9,
+        "reactionary (inbound late)": 12.1
+      },
+      "ranking": [
+        "IndiGo",
+        "Air India Group",
+        "Akasa Air",
+        "Alliance Air"
+      ],
+      "otp_by_group": {
+        "IndiGo": 82.3,
+        "Air India Group": 79.4,
+        "Akasa Air": 75.6,
+        "Alliance Air": 56.5
+      }
+    },
+    {
+      "taxi_out_min": 10,
+      "otp_pct": 87.6,
+      "attribution_pct": {
+        "ground-side / other": 67.9,
+        "reactionary (inbound late)": 19.2,
+        "weather-exposed": 12.9
+      },
+      "ranking": [
+        "Akasa Air",
+        "IndiGo",
+        "Air India Group",
+        "Alliance Air"
+      ],
+      "otp_by_group": {
+        "Akasa Air": 89.7,
+        "IndiGo": 88.9,
+        "Air India Group": 85.9,
+        "Alliance Air": 68.1
+      }
+    },
+    {
+      "taxi_out_min": 15,
+      "otp_pct": 91.6,
+      "attribution_pct": {
+        "ground-side / other": 59.2,
+        "reactionary (inbound late)": 28.4,
+        "weather-exposed": 12.4
+      },
+      "ranking": [
+        "Akasa Air",
+        "IndiGo",
+        "Air India Group",
+        "Alliance Air"
+      ],
+      "otp_by_group": {
+        "Akasa Air": 95.3,
+        "IndiGo": 92.9,
+        "Air India Group": 88.5,
+        "Alliance Air": 78.3
+      }
+    },
+    {
+      "taxi_out_min": 20,
+      "otp_pct": 93.7,
+      "attribution_pct": {
+        "ground-side / other": 53.1,
+        "reactionary (inbound late)": 38.0,
+        "weather-exposed": 8.9
+      },
+      "ranking": [
+        "Akasa Air",
+        "IndiGo",
+        "Air India Group",
+        "Alliance Air"
+      ],
+      "otp_by_group": {
+        "Akasa Air": 96.6,
+        "IndiGo": 95.2,
+        "Air India Group": 90.4,
+        "Alliance Air": 79.7
+      }
+    },
+    {
+      "taxi_out_min": 25,
+      "otp_pct": 95.0,
+      "attribution_pct": {
+        "reactionary (inbound late)": 47.6,
+        "ground-side / other": 44.5,
+        "weather-exposed": 7.8
+      },
+      "ranking": [
+        "Akasa Air",
+        "IndiGo",
+        "Air India Group",
+        "Alliance Air"
+      ],
+      "otp_by_group": {
+        "Akasa Air": 97.0,
+        "IndiGo": 96.6,
+        "Air India Group": 91.7,
+        "Alliance Air": 81.2
+      }
+    }
+  ],
+  "assumptions": {
+    "taxi_out_min": 15,
+    "taxi_in_min": 8,
+    "min_turn_min": 30,
+    "adverse": {
+      "precipitation_mm": 1.0,
+      "wind_gusts_kmh": 55.0,
+      "visibility_m": 3000,
+      "thunderstorm_codes": [
+        95,
+        96,
+        99
+      ]
+    }
+  },
+  "decision_window": {
+    "ground_leads_up_to": 20,
+    "overtaken_at": 25,
+    "overtaken_by": "reactionary (inbound late)",
+    "overtaken_pcts": {
+      "ground-side / other": 44.5,
+      "reactionary (inbound late)": 47.6
+    },
+    "ranking_stable_from": 10,
+    "base_ranking": [
+      "Akasa Air",
+      "IndiGo",
+      "Air India Group",
+      "Alliance Air"
+    ]
+  }
+}

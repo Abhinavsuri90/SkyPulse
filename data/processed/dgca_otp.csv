@@ -1,0 +1,62 @@
+chart,airline_group,airport,otp_pct,page,dup_label,month
+airline_all_airports,IndiGo,ALL,91.5,6,False,2026-08
+airline_all_airports,Akasa Air,ALL,90.5,6,False,2026-08
+airline_all_airports,Air India Group,ALL,83.9,6,False,2026-08
+airline_all_airports,Alliance Air,ALL,71.8,6,False,2026-08
+airline_all_airports,SpiceJet,ALL,17.9,6,False,2026-08
+airport_all_airlines,All 5 groups,MAA,94.3,6,False,2026-08
+airport_all_airlines,All 5 groups,HYD,92.8,6,False,2026-08
+airport_all_airlines,All 5 groups,BLR,92.0,6,False,2026-08
+airport_all_airlines,All 5 groups,AMD,91.5,6,False,2026-08
+airport_all_airlines,All 5 groups,CCU,90.5,6,False,2026-08
+airport_all_airlines,All 5 groups,BOM,86.1,6,False,2026-08
+airport_all_airlines,All 5 groups,LKO,84.4,6,False,2026-08
+airport_all_airlines,All 5 groups,DEL,83.3,6,False,2026-08
+airport_all_airlines,All 5 groups,GAU,81.9,6,False,2026-08
+airport_all_airlines,All 5 groups,COK,80.2,6,False,2026-08
+airport_by_airline,Air India Group,MAA,92.6,7,False,2026-08
+airport_by_airline,Air India Group,HYD,88.3,7,False,2026-08
+airport_by_airline,Air India Group,BLR,87.3,7,False,2026-08
+airport_by_airline,Air India Group,AMD,86.6,7,False,2026-08
+airport_by_airline,Air India Group,CCU,86.1,7,False,2026-08
+airport_by_airline,Air India Group,GAU,85.4,7,False,2026-08
+airport_by_airline,Air India Group,BOM,85.1,7,False,2026-08
+airport_by_airline,Air India Group,DEL,82.4,7,False,2026-08
+airport_by_airline,Air India Group,LKO,71.7,7,False,2026-08
+airport_by_airline,Air India Group,COK,68.1,7,False,2026-08
+airport_by_airline,Alliance Air,GAU,92.0,7,True,2026-08
+airport_by_airline,Alliance Air,MAA,92.3,7,False,2026-08
+airport_by_airline,Alliance Air,HYD,83.0,7,False,2026-08
+airport_by_airline,Alliance Air,AMD,80.6,7,False,2026-08
+airport_by_airline,Alliance Air,COK,76.9,7,False,2026-08
+airport_by_airline,Alliance Air,BLR,76.8,7,False,2026-08
+airport_by_airline,Alliance Air,BOM,67.8,7,False,2026-08
+airport_by_airline,Alliance Air,DEL,66.7,7,False,2026-08
+airport_by_airline,Alliance Air,CCU,64.4,7,False,2026-08
+airport_by_airline,Alliance Air,GAU,63.5,7,True,2026-08
+airport_by_airline,SpiceJet,DEL,24.3,8,False,2026-08
+airport_by_airline,SpiceJet,BLR,18.2,8,False,2026-08
+airport_by_airline,SpiceJet,BOM,9.1,8,False,2026-08
+airport_by_airline,SpiceJet,COK,4.5,8,False,2026-08
+airport_by_airline,SpiceJet,CCU,0.0,8,False,2026-08
+airport_by_airline,SpiceJet,AMD,0.0,8,False,2026-08
+airport_by_airline,IndiGo,MAA,94.8,8,False,2026-08
+airport_by_airline,IndiGo,BLR,94.7,8,False,2026-08
+airport_by_airline,IndiGo,CCU,94.0,8,False,2026-08
+airport_by_airline,IndiGo,HYD,93.9,8,False,2026-08
+airport_by_airline,IndiGo,COK,92.4,8,False,2026-08
+airport_by_airline,IndiGo,AMD,92.2,8,False,2026-08
+airport_by_airline,IndiGo,BOM,90.3,8,False,2026-08
+airport_by_airline,IndiGo,LKO,88.6,8,False,2026-08
+airport_by_airline,IndiGo,DEL,87.7,8,False,2026-08
+airport_by_airline,IndiGo,GAU,80.9,8,False,2026-08
+airport_by_airline,Akasa Air,AMD,98.4,9,False,2026-08
+airport_by_airline,Akasa Air,HYD,96.8,9,False,2026-08
+airport_by_airline,Akasa Air,BLR,96.4,9,False,2026-08
+airport_by_airline,Akasa Air,GAU,95.2,9,False,2026-08
+airport_by_airline,Akasa Air,COK,94.0,9,False,2026-08
+airport_by_airline,Akasa Air,MAA,90.0,9,False,2026-08
+airport_by_airline,Akasa Air,LKO,88.9,9,False,2026-08
+airport_by_airline,Akasa Air,BOM,87.5,9,False,2026-08
+airport_by_airline,Akasa Air,DEL,87.4,9,False,2026-08
+airport_by_airline,Akasa Air,CCU,85.2,9,False,2026-08

@@ -1,0 +1,123 @@
+{
+  "month": "2026-08",
+  "ours_pct": 91.8,
+  "n": 5738,
+  "dgca_blr_pct": 92.0,
+  "gap_pts": -0.2,
+  "by_group": [
+    {
+      "dgca_group": "Akasa Air",
+      "n": 405.0,
+      "ours": 96.3,
+      "dgca": 96.4,
+      "gap_pts": -0.1
+    },
+    {
+      "dgca_group": "IndiGo",
+      "n": 3861.0,
+      "ours": 92.6,
+      "dgca": 94.7,
+      "gap_pts": -2.1
+    },
+    {
+      "dgca_group": "Air India Group",
+      "n": 1403.0,
+      "ours": 88.8,
+      "dgca": 87.3,
+      "gap_pts": 1.5
+    },
+    {
+      "dgca_group": "Alliance Air",
+      "n": 69.0,
+      "ours": 78.3,
+      "dgca": 76.8,
+      "gap_pts": 1.5
+    },
+    {
+      "dgca_group": "SpiceJet",
+      "n": NaN,
+      "ours": NaN,
+      "dgca": 18.2,
+      "gap_pts": NaN
+    }
+  ],
+  "same_ranking": true,
+  "implied_taxi_out_min": 16,
+  "sweep": {
+    "0": 67.9,
+    "5": 80.8,
+    "10": 87.9,
+    "15": 91.8,
+    "20": 93.9,
+    "25": 95.3,
+    "30": 96.2
+  },
+  "ours_attribution_pct": {
+    "ground-side / other": 57.2,
+    "reactionary (inbound late)": 28.8,
+    "weather-exposed": 14.0
+  },
+  "dgca_attribution_pct": {
+    "reactionary (inbound late)": 65.0,
+    "weather-exposed": 5.0,
+    "ground-side / other": 30.0
+  },
+  "parse_checks": [
+    {
+      "rule": "V-DG-1",
+      "severity": "critical",
+      "description": "BLR airport-level OTP present exactly once",
+      "passed": true,
+      "observed": 1
+    },
+    {
+      "rule": "V-DG-2",
+      "severity": "critical",
+      "description": "every OTP value within 0-100 %",
+      "passed": true,
+      "observed": 0
+    },
+    {
+      "rule": "V-DG-3",
+      "severity": "warn",
+      "description": "airline-wise overall chart has all 5 groups",
+      "passed": true,
+      "observed": 5
+    },
+    {
+      "rule": "V-DG-4",
+      "severity": "warn",
+      "description": "no duplicated airport labels within a chart",
+      "passed": false,
+      "observed": [
+        {
+          "airline_group": "Alliance Air",
+          "airport": "GAU",
+          "otp_pct": 92.0
+        },
+        {
+          "airline_group": "Alliance Air",
+          "airport": "GAU",
+          "otp_pct": 63.5
+        }
+      ]
+    },
+    {
+      "rule": "V-DG-5",
+      "severity": "warn",
+      "description": "delay-reason shares sum to ~100 %",
+      "passed": true,
+      "observed": 100.0
+    }
+  ],
+  "observed_groups": {
+    "Air India Group": 2716,
+    "Akasa Air": 681,
+    "Alliance Air": 92,
+    "IndiGo": 5114,
+    "SpiceJet": 32
+  },
+  "dgca_defects": true,
+  "arr_median_min": -12.0,
+  "decision_note": "That allowance is inside the range where the recommendation holds (10\u201320 min, see the evidence table), so the benchmark-consistent reading supports the same decision."
+}
