@@ -1,0 +1,123 @@
+# SkyPulse configuration: the one place to change scope.
+# Every stage reads this file; nothing below is hard-coded elsewhere.
+
+airport:
+  icao: VOBL
+  iata: BLR
+  name: Kempegowda International Airport Bengaluru
+  lat: 13.1979          # from OurAirports (verified in validate.py)
+  lon: 77.706299
+  # OurAirports has NO timezone column. India = IST (UTC+05:30), no DST, so a fixed zone is safe.
+  timezone: Asia/Kolkata
+  country: IN
+
+# Analysis window, in LOCAL (IST) calendar dates, inclusive.
+# Chosen to match DGCA's latest published OTP month (August 2026, published 2026-09-23),
+# so our KPI and the regulator's benchmark cover exactly the same month.
+analysis_window:
+  start: "2026-08-01"
+  end: "2026-08-31"
+
+# Cross-check days: the IST dates covered by the AviationStack snapshot. OpenSky is pulled for these
+# days too, so the two sources can be matched on the same flights (aircraft icao24 + time) to
+# (1) learn callsign -> flight-number mappings, (2) verify AviationStack's time zone, and
+# (3) measure the gap between AviationStack "actual" and OpenSky wheels-up.
+crosscheck_days: ["2026-09-22"]
+
+kpi:
+  on_time_threshold_min: 15      # same definition DGCA uses: >15 min after STD = delayed
+  # Plausibility bounds on a computed delay. Outside these = probable schedule mismatch
+  # (wrong rotation / wrong day), which is flagged and excluded, never "clipped".
+  delay_min_bound: -60
+  delay_max_bound: 720
+  # Retime detection (V-DR-5): a flight code late (or early) on >= share of its August operations is a
+  # schedule change between August and the Sept sample, not a delay, when EITHER
+  #   (a) the median offset is beyond median_late_min / median_early_min, OR
+  #   (b) the offset is stable (IQR <= stable_iqr_max) AND the Sept sample shows the same flight
+  #       leaving on time (|actual - scheduled| <= sample_on_time_max): the sample contradicts a chronic delay.
+  retime:
+    min_ops: 5
+    share: 0.8
+    median_late_min: 60
+    median_early_min: -30
+    stable_iqr_max: 30
+    sample_on_time_max: 15
+
+# OpenSky reports when a transponder was first/last seen, i.e. wheels-up / wheels-down,
+# not the gate (off-block / in-block) times that schedules and DGCA use.
+# These allowances convert runway time to gate time (assumption A-2). They cannot be measured from our
+# sources: AviationStack "actual" turned out to be ADS-B runway time too (K-8). So metrics.py reports
+# OTP across a range of allowances (sensitivity) instead of tuning this value to hit DGCA's number.
+taxi:
+  default_taxi_out_min: 15
+  default_taxi_in_min: 8
+  sensitivity_out_min: [0, 5, 10, 15, 20, 25]
+
+turnaround:
+  min_minutes: 20      # shorter than this = data artefact (e.g. go-around logged as two legs)
+  max_hours: 12        # longer than this = aircraft parked / overnight, not an operational turn
+  # Delay attribution: a departure is REACTIONARY if its inbound aircraft reached the gate so late
+  # that even a minimum turn could not make STD + 15 min. Planning minimum for narrow-body domestic
+  # turns (assumption A-8).
+  min_turn_minutes: 30
+
+weather:
+  # An hour is "adverse" if ANY condition is met.
+  adverse:
+    precipitation_mm: 1.0          # >= 1 mm in the hour (moderate rain)
+    # 55 km/h (~30 kt), not 40: August monsoon gusts at BLR have p50 = 33 and p90 = 47 km/h, so a 40 km/h
+    # threshold flagged 36% of all hours ("the climate", not "adverse"). Changed BEFORE looking at delays.
+    wind_gusts_kmh: 55.0
+    visibility_m: 3000             # < 3 km
+    thunderstorm_codes: [95, 96, 99]
+  # A departure is weather-exposed if an adverse hour falls in [STD - lookback, actual departure].
+  lookback_hours: 1
+
+sources:
+  opensky:
+    base_url: https://opensky-network.org/api
+    token_url: https://auth.opensky-network.org/auth/realms/opensky-network/protocol/openid-connect/token
+    chunk: day                     # one request per IST day per direction -> per-day completeness check
+    expected_min_daily_departures: 200   # absolute floor; BLR runs ~350+/day
+    partial_day_ratio: 0.7         # a day < 70% of the window median is flagged as a partial pull
+  aviationstack:
+    base_url: https://api.aviationstack.com/v1/flights
+    max_calls_total: 30            # HARD cap, enforced by a persistent ledger (free tier = 100/month)
+    page_size: 100
+    # Unfiltered BLR pages are ~50% codeshare duplicates (measured on call #1). Filtering by the
+    # marketing airline of the 5 DGCA groups returns their own operated flights: ~85% of BLR
+    # departures (OpenSky Aug 2026 callsign mix), at close to 100% page efficiency.
+    # IndiGo, Air India Express, Air India, Akasa Air, Alliance Air.
+    # SpiceJet (SG) dropped after ledger call #12 returned 0 BLR departures; no budget spent on it again.
+    airline_filters: ["6E", "IX", "AI", "QP", "9I"]
+  open_meteo:
+    base_url: https://historical-forecast-api.open-meteo.com/v1/forecast
+    hourly: [precipitation, rain, wind_speed_10m, wind_gusts_10m, visibility, weather_code]
+  ourairports:
+    url: https://davidmegginson.github.io/ourairports-data/airports.csv
+    min_rows: 50000
+  dgca:
+    listing_url: https://www.dgca.gov.in/digigov-portal/scan?
+    listing_rulebook_id: "4264"    # DGCA "Air Traffic" page (monthly domestic traffic reports)
+    listing_content_id: "4206"
+    file_host: https://public-prd-dgca.s3.ap-south-1.amazonaws.com
+    benchmark_month: "2026-08"
+
+http:
+  timeout_s: 60
+  retries: 3
+  backoff_s: 2                     # waits 2s, 4s, 8s between attempts
+
+# ICAO callsign prefix -> airline, and the DGCA reporting group it rolls up to.
+# DGCA reports five groups; everything else is outside the benchmark population.
+airlines:
+  IGO: {name: IndiGo, dgca_group: IndiGo}
+  AKJ: {name: Akasa Air, dgca_group: Akasa Air}
+  AIC: {name: Air India, dgca_group: Air India Group}
+  AXB: {name: Air India Express, dgca_group: Air India Group}
+  IAD: {name: AIX Connect (ex-AirAsia India), dgca_group: Air India Group}
+  VTI: {name: Vistara (merged into Air India), dgca_group: Air India Group}
+  LLR: {name: Alliance Air, dgca_group: Alliance Air}
+  SEJ: {name: SpiceJet, dgca_group: SpiceJet}
+  SDG: {name: Star Air, dgca_group: null}
+  # Prefixes not listed here are flagged `unmapped_airline` by validate.py rather than guessed.

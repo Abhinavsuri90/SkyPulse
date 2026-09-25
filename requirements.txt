@@ -1,0 +1,11 @@
+requests==2.34.2
+pandas==3.0.6
+PyYAML==6.0.3
+pdfplumber==0.11.10
+python-dotenv==1.2.3
+pytest==9.1.1
+matplotlib==3.11.2
+jupyter==1.1.1
+nbformat==5.11.1
+nbconvert==7.17.1
+numpy==2.5.3
