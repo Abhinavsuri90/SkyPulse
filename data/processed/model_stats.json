@@ -1,0 +1,284 @@
+{
+  "raw_window_legs": 20549,
+  "flight_leg_rows": 20549,
+  "legs_in_kpi": {
+    "DEP": 6430,
+    "ARR": 5966
+  },
+  "schedule_ref_rows": 634,
+  "xwalk_pairs": 489,
+  "xwalk_ambiguous": 0,
+  "tz_check": {
+    "n": 483,
+    "median_diff_if_ist_min": 0.9,
+    "median_diff_if_utc_min": -329.1,
+    "iqr_min": 3.0,
+    "by_direction": {
+      "ARR": -1.6,
+      "DEP": 1.4
+    },
+    "match_rate": {
+      "DEP": 0.935,
+      "ARR": 0.859
+    }
+  },
+  "as_actual_equals_runway_pct": 100.0,
+  "coverage": {
+    "direct_pct": 43.8,
+    "with_xwalk_pct": 76.7,
+    "unmatched_pct": 23.3
+  },
+  "dest_agreement_pct_by_source": {
+    "callsign_map": 94.7,
+    "flight_code": 94.2
+  },
+  "dep_dest_unknown_pct": 42.6,
+  "domestic_unknown_pct": 0.0,
+  "merged_round_trips": 523,
+  "turnarounds": {
+    "pairs": 9675,
+    "valid": 9276
+  },
+  "retimed": {
+    "flight_codes": 20,
+    "legs": 429,
+    "legs_by_group": {
+      "Air India Group": 365,
+      "Alliance Air": 21,
+      "IndiGo": 43
+    },
+    "by_reason": {
+      "large offset": 15,
+      "stable offset; on time in schedule sample": 4,
+      "early offset": 1
+    },
+    "codes": [
+      {
+        "direction": "ARR",
+        "op_flight_icao": "AIC132",
+        "n": 30,
+        "med": 54.5,
+        "late": 1.0,
+        "early": 0.0,
+        "iqr": 23.2,
+        "sample_offset_min": -6.0,
+        "reason": "stable offset; on time in schedule sample"
+      },
+      {
+        "direction": "ARR",
+        "op_flight_icao": "AIC2485",
+        "n": 31,
+        "med": 98.3,
+        "late": 1.0,
+        "early": 0.0,
+        "iqr": 28.6,
+        "sample_offset_min": -10.5,
+        "reason": "large offset"
+      },
+      {
+        "direction": "ARR",
+        "op_flight_icao": "AXB1216",
+        "n": 23,
+        "med": -37.4,
+        "late": 0.0,
+        "early": 0.8,
+        "iqr": 9.6,
+        "sample_offset_min": -14.0,
+        "reason": "early offset"
+      },
+      {
+        "direction": "ARR",
+        "op_flight_icao": "AXB1507",
+        "n": 24,
+        "med": 94.0,
+        "late": 1.0,
+        "early": 0.0,
+        "iqr": 18.5,
+        "sample_offset_min": -23.0,
+        "reason": "large offset"
+      },
+      {
+        "direction": "ARR",
+        "op_flight_icao": "AXB2362",
+        "n": 7,
+        "med": 226.9,
+        "late": 1.0,
+        "early": 0.0,
+        "iqr": 11.0,
+        "sample_offset_min": -20.0,
+        "reason": "large offset"
+      },
+      {
+        "direction": "ARR",
+        "op_flight_icao": "AXB2932",
+        "n": 26,
+        "med": 141.7,
+        "late": 1.0,
+        "early": 0.0,
+        "iqr": 30.2,
+        "sample_offset_min": -1.0,
+        "reason": "large offset"
+      },
+      {
+        "direction": "ARR",
+        "op_flight_icao": "AXB5312",
+        "n": 15,
+        "med": 187.7,
+        "late": 0.9,
+        "early": 0.0,
+        "iqr": 141.8,
+        "sample_offset_min": -26.0,
+        "reason": "large offset"
+      },
+      {
+        "direction": "ARR",
+        "op_flight_icao": "AXB920",
+        "n": 12,
+        "med": 155.9,
+        "late": 1.0,
+        "early": 0.0,
+        "iqr": 91.0,
+        "sample_offset_min": NaN,
+        "reason": "large offset"
+      },
+      {
+        "direction": "DEP",
+        "op_flight_icao": "AIC2511",
+        "n": 30,
+        "med": 42.2,
+        "late": 1.0,
+        "early": 0.0,
+        "iqr": 7.3,
+        "sample_offset_min": 1.5,
+        "reason": "stable offset; on time in schedule sample"
+      },
+      {
+        "direction": "DEP",
+        "op_flight_icao": "AXB2001",
+        "n": 31,
+        "med": 292.5,
+        "late": 1.0,
+        "early": 0.0,
+        "iqr": 15.2,
+        "sample_offset_min": 4.0,
+        "reason": "large offset"
+      },
+      {
+        "direction": "DEP",
+        "op_flight_icao": "AXB2361",
+        "n": 12,
+        "med": 228.9,
+        "late": 1.0,
+        "early": 0.0,
+        "iqr": 6.2,
+        "sample_offset_min": 8.0,
+        "reason": "large offset"
+      },
+      {
+        "direction": "DEP",
+        "op_flight_icao": "AXB2875",
+        "n": 30,
+        "med": 58.2,
+        "late": 1.0,
+        "early": 0.0,
+        "iqr": 18.9,
+        "sample_offset_min": 2.0,
+        "reason": "stable offset; on time in schedule sample"
+      },
+      {
+        "direction": "DEP",
+        "op_flight_icao": "AXB2924",
+        "n": 23,
+        "med": 558.0,
+        "late": 1.0,
+        "early": 0.0,
+        "iqr": 199.6,
+        "sample_offset_min": 34.0,
+        "reason": "large offset"
+      },
+      {
+        "direction": "DEP",
+        "op_flight_icao": "AXB2931",
+        "n": 31,
+        "med": 142.5,
+        "late": 0.9,
+        "early": 0.0,
+        "iqr": 15.8,
+        "sample_offset_min": 20.0,
+        "reason": "large offset"
+      },
+      {
+        "direction": "DEP",
+        "op_flight_icao": "AXB5313",
+        "n": 15,
+        "med": 652.0,
+        "late": 1.0,
+        "early": 0.0,
+        "iqr": 28.6,
+        "sample_offset_min": 44.0,
+        "reason": "large offset"
+      },
+      {
+        "direction": "DEP",
+        "op_flight_icao": "AXB921",
+        "n": 13,
+        "med": 117.2,
+        "late": 1.0,
+        "early": 0.0,
+        "iqr": 33.0,
+        "sample_offset_min": NaN,
+        "reason": "large offset"
+      },
+      {
+        "direction": "DEP",
+        "op_flight_icao": "AXB941",
+        "n": 12,
+        "med": 665.7,
+        "late": 1.0,
+        "early": 0.0,
+        "iqr": 16.5,
+        "sample_offset_min": 28.0,
+        "reason": "large offset"
+      },
+      {
+        "direction": "DEP",
+        "op_flight_icao": "IGO411",
+        "n": 31,
+        "med": 65.4,
+        "late": 1.0,
+        "early": 0.0,
+        "iqr": 12.0,
+        "sample_offset_min": 5.0,
+        "reason": "large offset"
+      },
+      {
+        "direction": "DEP",
+        "op_flight_icao": "IGO6032",
+        "n": 12,
+        "med": 39.9,
+        "late": 1.0,
+        "early": 0.0,
+        "iqr": 6.3,
+        "sample_offset_min": -1.0,
+        "reason": "stable offset; on time in schedule sample"
+      },
+      {
+        "direction": "DEP",
+        "op_flight_icao": "LLR517",
+        "n": 21,
+        "med": 198.1,
+        "late": 0.9,
+        "early": 0.0,
+        "iqr": 51.0,
+        "sample_offset_min": 6.5,
+        "reason": "large offset"
+      }
+    ]
+  },
+  "event_rows": 54404,
+  "weather_adverse_hours": 38,
+  "taxi_allowance_min": {
+    "out": 15,
+    "in": 8
+  }
+}
