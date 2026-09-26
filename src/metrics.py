@@ -14,7 +14,16 @@ from datetime import datetime, timezone
 import pandas as pd
 
 from benchmark import parse_dgca_report
-from common import DB_PATH, OUTPUT, PROCESSED, RAW, atomic_write, get_logger, load_config
+from common import (
+    DB_PATH,
+    OUTPUT,
+    PROCESSED,
+    RAW,
+    atomic_write,
+    get_logger,
+    load_config,
+    local_days,
+)
 
 log = get_logger("metrics")
 
@@ -23,7 +32,8 @@ SQL = {
     # The turn joined is the aircraft's BLR ground time before this departure (at most one per departure).
     "departures": """
         SELECT l.leg_id, l.dgca_group, l.schedule_source, l.is_domestic, l.delay_min, l.runway_local, l.sched_local,
-               o.outcome, o.wx_exposed, o.inbound_late, o.attribution, o.inbound_arr_delay_min, t.sched_ground_min
+               o.outcome, o.wx_exposed, o.inbound_late, o.inbound_seen, o.attribution, o.inbound_arr_delay_min,
+               t.sched_ground_min
         FROM flight_leg l JOIN departure_outcome o ON o.dep_leg_id = l.leg_id
         LEFT JOIN turnaround t ON t.dep_leg_id = l.leg_id AND t.valid = 1
         WHERE l.direction = 'DEP' AND l.in_kpi = 1""",
@@ -85,8 +95,8 @@ def run() -> dict:
     for x in cfg["taxi"]["sensitivity_out_min"]:
         late = (raw - x) > thr
         dl = d[late]
-        cat = pd.Series("ground-side / other", index=dl.index).mask(dl.wx_exposed == 1, "weather-exposed").mask(
-            dl.inbound_late == 1, "reactionary (inbound late)")
+        cat = (pd.Series("ground-side / other", index=dl.index).mask(dl.inbound_seen == 0, "inbound not observed")
+               .mask(dl.wx_exposed == 1, "weather-exposed").mask(dl.inbound_late == 1, "reactionary (inbound late)"))
         share = cat.value_counts(normalize=True).mul(100).round(1).to_dict()
         rank = d.assign(ok=~late).groupby("dgca_group").ok.mean().sort_values(ascending=False)
         sens.append({"taxi_out_min": x, "otp_pct": pct((~late).mean()), "attribution_pct": share,
@@ -103,10 +113,13 @@ def run() -> dict:
         rt = pd.read_sql("""SELECT delay_min FROM flight_leg WHERE direction = 'DEP' AND retimed = 1""", con)
     otp_incl = pct(((d.delay_min <= thr).sum() + (rt.delay_min <= thr).sum()) / (len(d) + len(rt)))
     dgca_otp, dgca_reasons = parse_dgca_report(RAW / "dgca" / f"dgca_traffic_report_{cfg['sources']['dgca']['benchmark_month']}.pdf")
-    blr = dgca_otp[(dgca_otp.chart == "airport_all_airlines") & (dgca_otp.airport == cfg["airport"]["iata"]) & ~dgca_otp.dup_label]
+    here = (dgca_otp.airport == cfg["airport"]["iata"]) & ~dgca_otp.dup_label
+    blr = dgca_otp[here & (dgca_otp.chart == "airport_all_airlines")]
+    blr_by_group = dgca_otp[here & (dgca_otp.chart == "airport_by_airline")].set_index("airline_group").otp_pct
     m = {
         # facts the evidence table's brief Known / Unknown / Assumption / Limitation section quotes
         "context": {"dgca_blr_pct": float(blr.otp_pct.iloc[0]) if len(blr) else None,
+                    "dgca_blr_by_group": blr_by_group.to_dict(),
                     "benchmark_month": cfg["sources"]["dgca"]["benchmark_month"],
                     "tz_check": stats["tz_check"], "coverage": stats["coverage"]},
         "dgca_national_reactionary_pct": float(dgca_reasons.set_index("reason").pct.get("Reactionary", float("nan"))),
@@ -130,7 +143,7 @@ def run() -> dict:
         "m5_weather": {"value_pct": pct(delayed.wx_exposed.mean()), "delayed_n": len(delayed),
                        "delayed_exposed_n": int(delayed.wx_exposed.sum()), "share_of_all_departures_exposed_pct": pct(d.wx_exposed.mean()),
                        "otp_when_exposed_pct": exp.get(1), "otp_when_clear_pct": exp.get(0),
-                       "adverse_hours": int(q["adverse_hours"].n[0]), "hours_in_window": 24 * 31},
+                       "adverse_hours": int(q["adverse_hours"].n[0]), "hours_in_window": 24 * len(local_days(cfg))},
         "attribution": {k: {"n": int(v), "pct": pct(v / len(delayed))} for k, v in att.items()},
         "attribution_by_group": (delayed.assign(grp=delayed.dgca_group.fillna("Other"))
                                  .groupby(["grp", "attribution"]).size().unstack(fill_value=0).to_dict("index")),
@@ -172,16 +185,19 @@ def decision_window(sens: list[dict], base_allowance: int) -> dict:
             "ranking_stable_from": stable, "base_ranking": base_rank}
 
 
-def decision(m: dict) -> tuple[str, str]:
+def decision(m: dict, cfg: dict) -> tuple[str, str]:
     att = {k: v["pct"] for k, v in m["attribution"].items()}
     inbound_wx = att.get("reactionary (inbound late)", 0) + att.get("weather-exposed", 0)
-    ground = att.get("ground-side / other", 0)
-    groups = [g for g in m["otp_by_group"] if g["grp"] != "Other" and g["n"] >= 200]
+    ground, unseen = att.get("ground-side / other", 0), att.get("inbound not observed", 0)
+    nmin, even = cfg["report"]["min_group_departures"], cfg["report"]["even_spread_ratio"]
+    groups = [g for g in m["otp_by_group"] if g["grp"] != "Other" and g["n"] >= nmin]
     worst = min(groups, key=lambda g: g["otp_pct"])
     best = max(groups, key=lambda g: g["otp_pct"])
     lead = "turnaround staffing / ground process" if ground > inbound_wx else "schedule padding"
     text = (f"**Lead with {lead}.** Of delayed departures, {ground:.0f}% were ground-side (the aircraft was at the gate in time and the weather was "
             f"clear, yet it still left late), against {inbound_wx:.0f}% inbound-late or weather-exposed. ")
+    if unseen:
+        text += f"The remaining {unseen:.0f}% had no observed inbound aircraft, so they are counted as neither. "
     text += (f"The strongest BLR-specific evidence is the inbound side: arriving flights reach the gate a median "
              f"{abs(m['m3_arr_delay']['median_min']):.0f} min **early** ({m['m3_arr_delay']['on_time_pct']:.0f}% within 15 min), so most aircraft "
              f"are available in time, and the delay is added on the ground.\n\n")
@@ -195,17 +211,21 @@ def decision(m: dict) -> tuple[str, str]:
     gs = {g["grp"]: rate(g["grp"], G) for g in groups}
     lo, hi = min(gs, key=gs.get), max(gs, key=gs.get)
     big = max(groups, key=lambda g: g["n"])["grp"]
-    # Ground-side rates within a factor of 1.5 across the large groups are read as one airport-wide problem.
-    spread = (f"is **airport-wide, not one airline's**: every airline group with 200+ departures loses {gs[lo]:.1f}–{gs[hi]:.1f} "
-              f"departures per 100 to it" if gs[lo] and gs[hi] / gs[lo] < 1.5 else
+    # Ground-side rates within a factor of `even` across the large groups are read as one airport-wide problem.
+    spread = (f"is **airport-wide, not one airline's**: every airline group with {nmin}+ departures loses {gs[lo]:.1f}–{gs[hi]:.1f} "
+              f"departures per 100 to it" if gs[lo] and gs[hi] / gs[lo] < even else
               f"is **uneven across airlines**: from {gs[lo]:.1f} per 100 departures at {lo} to {gs[hi]:.1f} at {hi}")
     text += (f"Ground-side delay {spread}, and {big} alone accounts for {m['attribution_by_group'][big].get(G, 0)} of the "
              f"{m['attribution'][G]['n']} ground-side cases.\n\n")
     w = worst["grp"]
     peers = [g["grp"] for g in sorted(groups, key=lambda g: -g["otp_pct"]) if g["grp"] != w]
     inbound = rate(w, R) - max(rate(p, R) for p in peers) > rate(w, G) - max(rate(p, G) for p in peers)
-    text += (f"Of the airline groups with 200+ departures, {w} has the lowest OTP: {worst['otp_pct']:.1f}% on {worst['n']:,} departures vs "
-             f"{best['grp']} {best['otp_pct']:.1f}% at the same airport in the same weather (DGCA's own BLR figures show the same order). "
+    dg = m["context"]["dgca_blr_by_group"]
+    order = (f"DGCA's own BLR figures show the same order, {dg[w]:.1f}% vs {dg[best['grp']]:.1f}%"
+             if w in dg and best["grp"] in dg and dg[w] < dg[best["grp"]] else
+             "DGCA's BLR figures do **not** show this order; see `output/benchmark_comparison.md`")
+    text += (f"Of the airline groups with {nmin}+ departures, {w} has the lowest OTP: {worst['otp_pct']:.1f}% on {worst['n']:,} departures vs "
+             f"{best['grp']} {best['otp_pct']:.1f}% at the same airport in the same weather ({order}). "
              f"Most of that gap is **{'late-arriving aircraft, not the BLR turn' if inbound else 'time lost on the ground'}**: per 100 departures "
              f"it has {rate(w, R):.1f} reactionary delays against " + " and ".join(f"{rate(p, R):.1f} at {p}" for p in peers)
              + f", and {rate(w, G):.1f} ground-side against " + " and ".join(f"{rate(p, G):.1f}" for p in peers) + ". ")
@@ -226,7 +246,7 @@ def decision(m: dict) -> tuple[str, str]:
 def render(m: dict, cfg: dict) -> str:
     s = {r["taxi_out_min"]: r["otp_pct"] for r in m["sensitivity_taxi_out"]}
     t, w = m["m4_turnaround"], m["m5_weather"]
-    lead, text = decision(m)
+    _lead, text = decision(m, cfg)
     rows = [
         ("1", "**On-Time Departure Rate** (KPI)", f"**{m['m1_otp']['value_pct']:.1f}%**", f"{m['m1_otp']['n']:,}",
          f"Departures with est. off-block ≤ STD + {m['threshold_min']} min (DGCA rule). Est. off-block = OpenSky wheels-up − {cfg['taxi']['default_taxi_out_min']} min taxi (A-2). SQL check: {m['m1_otp']['sql_check_pct']:.1f}%.",
@@ -249,7 +269,7 @@ def render(m: dict, cfg: dict) -> str:
     att_rows = "\n".join(f"| {k} | {v['n']:,} | {v['pct']:.1f}% |" for k, v in sorted(m["attribution"].items(), key=lambda kv: -kv[1]["n"]))
     grp_rows = "\n".join(f"| {g['grp']} | {g['n']:,} | {g['otp_pct']:.1f}% | {g['avg_delay_min']:+.1f} |" for g in m["otp_by_group"])
     abg, prof = m["attribution_by_group"], m["delay_profile_by_group"]
-    cats = ["reactionary (inbound late)", "weather-exposed", "ground-side / other"]
+    cats = ["reactionary (inbound late)", "weather-exposed", "ground-side / other", "inbound not observed"]
 
     def inbound_cell(p: dict) -> str:
         return f"{p['inbound_late_pct']:.0f}% of {p['inbound_known']:,}" if p["inbound_late_pct"] is not None else "n/a (no schedule)"
@@ -258,7 +278,7 @@ def render(m: dict, cfg: dict) -> str:
     sens_tbl = "\n".join(
         f"| {r['taxi_out_min']} min | {r['otp_pct']:.1f}% | {r['attribution_pct'].get('ground-side / other', 0):.0f}% | "
         f"{r['attribution_pct'].get('reactionary (inbound late)', 0):.0f}% | {r['attribution_pct'].get('weather-exposed', 0):.0f}% | "
-        f"{' > '.join(r['ranking'])} |" for r in m["sensitivity_taxi_out"])
+        f"{r['attribution_pct'].get('inbound not observed', 0):.0f}% | {' > '.join(r['ranking'])} |" for r in m["sensitivity_taxi_out"])
     dw = m["decision_window"]
     if dw["overtaken_at"] is None:
         lead_txt = "Ground-side / other is the largest delay cause at **every allowance tested**"
@@ -275,6 +295,10 @@ def render(m: dict, cfg: dict) -> str:
               f"only changes outside this window.")
     cov = {c["direction"]: c for c in m["coverage"]}
     c, wx = m["context"], cfg["weather"]["adverse"]
+    lbg = m["retimed"]["legs_by_group"]
+    top_grp, top_n = max(lbg.items(), key=lambda kv: kv[1]) if lbg else ("no group", 0)
+    retime_who = (f"{'Most' if top_n > m['retimed']['legs'] / 2 else 'The largest share'} were {top_grp} ({top_n:,} legs); "
+                  f"left in, they would have exaggerated that group's delay problem." if lbg else "")
     return f"""# SkyPulse evidence table: BLR, {m['window']['start']} → {m['window']['end']}
 
 _Generated {m['generated_utc']} by `src/metrics.py` from the committed raw snapshot. Every number is reproducible with `python src/pipeline.py`._
@@ -299,8 +323,8 @@ Precedence follows DGCA (reactionary first); see `diagrams/workflow_model.md`.
 |---|---|---|---|
 {grp_rows}
 
-| Delayed departures by group: count (per 100 departures) | Reactionary | Weather-exposed | Ground-side / other | Inbound flights > {m['threshold_min']} min late |
-|---|---|---|---|---|
+| Delayed departures by group: count (per 100 departures) | Reactionary | Weather-exposed | Ground-side / other | Inbound not observed | Inbound flights > {m['threshold_min']} min late |
+|---|---|---|---|---|---|
 {abg_rows}
 
 ## Decision supported
@@ -311,13 +335,13 @@ Schedule padding would mainly help the reactionary share ({m['attribution'].get(
 
 ## Sensitivity to the one assumption we could not measure (taxi-out allowance, A-2)
 
-| Taxi-out allowance | OTP | Ground-side share | Reactionary share | Weather share | Airline OTP ranking |
-|---|---|---|---|---|---|
+| Taxi-out allowance | OTP | Ground-side share | Reactionary share | Weather share | Inbound not observed | Airline OTP ranking |
+|---|---|---|---|---|---|---|
 {sens_tbl}
 
 {robust}
 
-**Retimes (V-DR-5):** {m['retimed']['legs']:,} legs on {m['retimed']['flight_codes']} flight codes were offset from the September schedule on almost every August operation. Either the offset was large, or it was steady while the September sample showed the same flight on time. That is the signature of a schedule change between August and the September sample, not of delay. Excluding them moves OTP from {m['retimed']['otp_if_included_pct']:.1f}% to {m['m1_otp']['value_pct']:.1f}%. Most were Air India Group ({m['retimed']['legs_by_group'].get('Air India Group', 0)} legs); left in, they would have exaggerated that group's delay problem.
+**Retimes (V-DR-5):** {m['retimed']['legs']:,} legs on {m['retimed']['flight_codes']} flight codes were offset from the September schedule on almost every August operation. Either the offset was large, or it was steady while the September sample showed the same flight on time. That is the signature of a schedule change between August and the September sample, not of delay. Excluding them moves OTP from {m['retimed']['otp_if_included_pct']:.1f}% to {m['m1_otp']['value_pct']:.1f}%. {retime_who}
 
 ## Known / Unknown / Assumption / Limitation (brief)
 
@@ -339,6 +363,7 @@ Full register, with IDs and evidence: `docs/known_unknown_assumptions.md`.
 
 **Limitation**
 - {c['coverage']['unmatched_pct']:.0f}% of the five airline groups' departures have no schedule match. They count in traffic and turnarounds, not in delay metrics (L-6).
+- {m['attribution'].get('inbound not observed', {}).get('n', 0)} delayed departures have no observed inbound aircraft (OpenSky missed the landing). They are reported as "inbound not observed", not assumed to be ground-side (L-8).
 - DGCA's figures are airline self-reported (L-3); weather is modelled, not observed (L-4); the window is one monsoon month (L-5).
 """
 

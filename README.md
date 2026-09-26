@@ -8,8 +8,8 @@
 A reproducible data pipeline that turns five public aviation data sources into one operational decision for Kempegowda International Airport: **is departure delay coming from the air or from the ground, and how does BLR compare with the regulator's published figures?**
 
 > **Bottom line (August 2026).**
-> - **91.6 %** of BLR departures left on time. On the regulator's like-for-like population SkyPulse measures **91.8 %** against DGCA's independently published **92.0 %**: a gap of 0.2 points, with an identical airline ranking.
-> - **59 % of delayed departures were delayed on the ground.** In those cases the aircraft arrived in time and the weather was clear, yet it still left late.
+> - **91.6 %** of BLR departures left on time. On the regulator's like-for-like population SkyPulse measures **91.8 %** against DGCA's independently published **92.0 %**: a gap of 0.2 points, with an identical airline ranking. That gap depends on excluding flights retimed since August; left in, it is 3.7 points and the ranking still holds.
+> - **54 % of delayed departures were delayed on the ground.** In those cases the aircraft was provably at the airport in time and the weather was clear, yet it still left late. Another 5 % can't be attributed because the inbound aircraft was never observed.
 > - **Recommendation:** fix the turnaround process before padding schedules; ground-side delay hits every large airline at a similar rate. Air India Group's lower on-time rate is a separate, inbound problem: mostly late-arriving aircraft.
 
 Run the full pipeline and reproduce every number below, with no API keys and no network:
@@ -41,11 +41,11 @@ BLR's operations leadership can't see where departure delay builds up during a f
 | | August 2026 |
 |---|---|
 | **On-Time Departure Rate** (KPI) | **91.6 %** across 6,430 departures |
-| Independent benchmark (DGCA, same month, airlines and rule) | 91.8 % vs 92.0 %, so a gap of **−0.2 pts** and an **identical airline ranking** |
-| Delayed departures caused on the ground | **59 %** (319 of 539) |
+| Independent benchmark (DGCA, same month, airlines and rule) | 91.8 % vs 92.0 %, so a gap of **−0.2 pts** and an **identical airline ranking** (−3.7 pts if retimed flights are left in; ranking unchanged) |
+| Delayed departures caused on the ground | **54 %** (292 of 539) |
 | Inbound flights: median arrival vs schedule | **12.0 min early** |
 | Share of hours with adverse weather | 38 of 744 (5 %) |
-| Data processed | 20,549 flight legs from 5 sources, checked by 24 validation rules and 23 automated tests |
+| Data processed | 20,549 flight legs from 5 sources, checked by 24 validation rules and 25 automated tests |
 
 ### The five metrics
 
@@ -82,24 +82,27 @@ Two independent methods put the airlines in the same order, and agree on the ove
 - A taxi allowance of 16 min would close the gap.
 - We report that as a diagnostic, keep the planned 15 min, and **deliberately do not tune to the benchmark**.
 
+The level also depends on one judgment call: 236 departures on 10 flight codes are excluded as **retimes** (V-DR-5). These flights ran 40 min to 11 h off their September schedule on almost every August day, which means the timetable changed, not that the flights ran late. Left in, SkyPulse reads **88.3 %** (a 3.7-point gap), yet the airline ranking stays identical. Of the 20 retimed codes (departures and arrivals), all 18 that also appear in the September sample run at least 23 min closer to schedule in September than on a typical August day. The evidence for each code is in the benchmark report.
+
 SpiceJet (DGCA: 18.2 % at BLR) made only 32 BLR departures in August and has no schedule in our sample, so it is out of scope. Full comparison: [`output/benchmark_comparison.md`](output/benchmark_comparison.md)
 
 ### Where the delay comes from
 
-Each of the 539 delayed departures is attributed in DGCA's order of precedence, reactionary first:
+Each of the 539 delayed departures is attributed in DGCA's order of precedence, reactionary first. A delay counts as ground-side only when the aircraft was provably at BLR in time:
 
 | Cause | Delayed departures | Share | Test applied |
 |---|---|---|---|
-| **Ground-side / other** | 319 | **59.2 %** | Aircraft at the gate in time, clear weather, still left > 15 min late |
+| **Ground-side / other** | 292 | **54.2 %** | Inbound landed in time (or the aircraft was parked overnight), clear weather, still left > 15 min late |
 | Reactionary (inbound late) | 153 | 28.4 % | Inbound aircraft reached the gate too late for even a 30-min turn |
 | Weather-exposed | 67 | 12.4 % | Adverse weather hour in the departure window |
+| Inbound not observed | 27 | 5.0 % | OpenSky never saw the aircraft land, so the cause can't be assigned. Kept apart, not assumed to be ground-side |
 
 **Robustness:** the one unmeasurable input is the taxi-out allowance, so the analysis is rerun across its whole plausible range.
 
 | Taxi-out allowance | 0 min | 5 min | 10 min | **15 min** | 20 min | 25 min |
 |---|---|---|---|---|---|---|
 | On-Time Departure Rate | 67.2 % | 80.2 % | 87.6 % | **91.6 %** | 93.7 % | 95.0 % |
-| Ground-side share of delay | 81 % | 75 % | 68 % | **59 %** | 53 % | 44 % |
+| Ground-side share of delay | 77 % | 70 % | 62 % | **54 %** | 50 % | 42 % |
 | Reactionary share of delay | 7 % | 12 % | 19 % | **28 %** | 38 % | 48 % |
 
 Ground-side is the largest cause for every allowance **up to 20 min**; at 25 min, reactionary overtakes it. The airline ranking holds for every allowance of 10 min or more. **The recommendation therefore holds for any taxi-out between 10 and 20 min**, and the allowance that reproduces DGCA's published figure, 16 min, sits inside that window.
@@ -113,18 +116,18 @@ Ground-side is the largest cause for every allowance **up to 20 min**; at 25 min
 **For:** the BLR operations manager (the decision-maker) and the airline liaison team (who carry the conversation to the airlines).
 
 1. **Invest in the turnaround process before schedule padding.**
-   - 59 % of delay is added on the ground.
+   - 54 % of delay is added on the ground, against 28 % from late inbound aircraft.
    - Inbound flights reach the gate a median 12.0 min early, so most aircraft are available in time.
    - Turnarounds run a median of about 9 min over their scheduled ground time.
 2. **Treat Air India Group's gap as an inbound problem, not a turnaround one.** At the same airport, in the same weather, on-time rates differ sharply (DGCA's own BLR figures show the same gap). Rates per departure show why:
 
    | Airline group | On-time rate | Departures | Ground-side delays per 100 departures | Reactionary delays per 100 departures | Inbound flights > 15 min late |
    |---|---|---|---|---|---|
-   | Akasa Air | 95.3 % | 464 | 4.1 | 0.4 | 11 % |
-   | IndiGo | 92.9 % | 4,187 | 4.5 | 1.3 | 7 % |
-   | Air India Group | 88.5 % | 1,509 | 5.4 | **5.2** | **15 %** |
+   | Akasa Air | 95.3 % | 464 | 3.9 | 0.4 | 11 % |
+   | IndiGo | 92.9 % | 4,187 | 4.1 | 1.3 | 7 % |
+   | Air India Group | 88.5 % | 1,509 | 5.1 | **5.2** | **15 %** |
 
-   - Ground-side delay is similar for all three, so the turnaround work in point 1 is airport-wide. IndiGo alone has 190 of the 319 ground-side cases.
+   - Ground-side delay is similar for all three, so the turnaround work in point 1 is airport-wide. IndiGo alone has 170 of the 292 ground-side cases.
    - Air India Group's gap is late-arriving aircraft: four times IndiGo's reactionary rate, and twice its share of late inbound flights.
    - So the liaison team's conversation with Air India Group is about inbound punctuality and buffers on its late-running rotations, not BLR ground staff.
 3. **Don't pad schedules for weather in the monsoon months.** Only 38 of 744 hours were adverse, and weather-exposed delays are 12 % of the total.
@@ -184,8 +187,9 @@ Every issue below was found by profiling or cross-checking, fixed by a named rul
 | Aircraft IDs in different case (`8017F2` vs `8017f2`) | 958 rows | Normalised to lowercase (V-AS-3) | Most aircraft joins silently lost |
 | Codeshare duplicates | 339 of 1,486 schedule rows | Excluded (V-AS-1) | Flights double-counted |
 | Callsign ≠ flight number (e.g. `AIC7JN` operates flight `AIC2810`) | Only 43.8 % of departures match directly | Callsign mapping learned from 489 aircraft-and-time matches, raising coverage to **76.7 %**. Tested on August data it never saw: 94.7 % destination agreement vs 94.2 % for direct matches. | More than half of flights (56 %) unmeasurable |
-| Flights retimed after August | 20 flight codes, 429 legs: 15 run 1.1–11.1 h "late" every day; 4 run a steady 40–58 min "late" yet were on time in the September sample; 1 runs early | Flagged as schedule changes, not delays (V-DR-5) | OTP understated at 88.2 % instead of 91.6 %, and Air India Group blamed for delays it did not have |
+| Flights retimed after August | 20 flight codes, 429 legs: 15 run 1.1–11.1 h "late" every day; 4 run a steady 40–58 min "late" yet were on time in the September sample; 1 runs early | Flagged as schedule changes, not delays (V-DR-5). Their effect on the benchmark is reported, not hidden | OTP understated at 88.2 % instead of 91.6 %, and Air India Group blamed for delays it did not have |
 | OpenSky merges round trips into BLR → BLR legs | 523 legs | Take-off kept; landing excluded from arrival delay (V-OS-7) | Arrivals scored against the wrong flight |
+| Some delayed departures have no observed inbound landing | 27 of 539 delayed departures | Own bucket, "inbound not observed" (L-8) | Ground-side share overstated by 5 points |
 | A defect in DGCA's own report | Alliance Air chart lists Guwahati twice (92.0 and 63.5) | Both values flagged and unused (V-DG-4) | Wrong benchmark value |
 | Gust threshold describes the climate, not adverse weather | 40 km/h gusts fired on 265 of 744 hours | Raised to 55 km/h **before** delays were examined (A-5) | Weather blamed for most delays |
 
@@ -199,12 +203,12 @@ Rule-by-rule counts: [`output/validation_report.md`](output/validation_report.md
 |---|---|
 | Reproducible from raw inputs | The raw snapshot is committed. `--offline` forbids all network calls. CI checks that regenerated numbers equal the committed ones. |
 | Rerun-safe | Raw files are reused. The SQLite model is rebuilt from scratch each run. Outputs are written atomically. |
-| Fails loudly, never silently | Every external call retries 3 times with backoff, then stops the run. A failed run writes `LAST_RUN_FAILED.md` and changes no outputs. |
+| Fails loudly, never silently | Every external call retries 3 times with backoff, then stops the run. A failed run restores every output to the last successful run, so outputs never mix two runs, then writes `LAST_RUN_FAILED.md`. CI forces a late stage to fail and checks that nothing changed. |
 | No silent data loss | Row counts are logged at every stage. The model asserts 20,549 raw legs = 20,549 modelled legs. OTP is computed in both SQL and pandas and must agree. |
 | API budget cannot be overspent | A persistent ledger records each AviationStack call before it is made and refuses call 31 (22 used). |
 | Secrets stay secret | Keys live in a git-ignored `.env`, and error messages are scrubbed of credentials. There's a test for it. |
 
-Evidence of a deliberate failure drill and two byte-identical reruns: [`docs/run_evidence.md`](docs/run_evidence.md)
+Evidence of two deliberate failure drills and two byte-identical reruns: [`docs/run_evidence.md`](docs/run_evidence.md)
 
 ---
 
@@ -216,7 +220,7 @@ python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
 python src/pipeline.py --offline   # rebuild every output from the committed raw data
-pytest -q                          # 23 tests
+pytest -q                          # 25 tests
 ```
 
 Open [`notebooks/01_explore.ipynb`](notebooks/01_explore.ipynb) after running the pipeline. It is the investigation trail behind each rule.
@@ -231,6 +235,7 @@ python src/pipeline.py                          # fetch anything missing, reuse 
 python src/pipeline.py --refresh weather,dgca   # re-download chosen sources
 python src/ingest.py --aviationstack-calls 5    # spend AviationStack budget explicitly (ledger-capped at 30)
 python src/pipeline.py --fault weather          # failure drill: must fail loudly and change nothing
+python src/pipeline.py --offline --fault benchmark  # late-stage drill: earlier outputs are rolled back
 ```
 
 To change scope, edit [`config.yaml`](config.yaml): airport, window, thresholds and the airline map all live there. A new airport or month also needs a fresh ingest and a new AviationStack sample.
@@ -250,8 +255,8 @@ data/processed/             derived tables and JSON (SQLite is rebuilt each run,
 output/                     evidence_table.md, benchmark_comparison.md, validation_report.md, figures/
 docs/                       known_unknown_assumptions.md, run_evidence.md
 notebooks/01_explore.ipynb  investigation trail with charts
-tests/                      23 pytest checks
-.github/workflows/ci.yml    CI: tests + offline pipeline + reproducibility check
+tests/                      25 pytest checks
+.github/workflows/ci.yml    CI: tests + offline pipeline + reproducibility check + failure drill
 ```
 
 ---
@@ -265,6 +270,7 @@ tests/                      23 pytest checks
 | L-3 | The DGCA benchmark is airline self-reported and covers domestic flights only | The comparison is restricted to that same population |
 | L-4 | Weather is modelled (Open-Meteo), not observed (METAR) | Short storms can be mistimed by up to an hour |
 | L-6 | 23 % of the five groups' departures have no schedule match | They count in traffic and turnarounds, not in delay KPIs |
+| L-8 | 5 % of delayed departures have no observed inbound landing | Reported as "inbound not observed", never assumed to be ground-side |
 | L-5 | One month of data, during the monsoon | A winter-fog analysis needs a rerun (two dates in `config.yaml`) |
 
 Complete register: [`docs/known_unknown_assumptions.md`](docs/known_unknown_assumptions.md)
@@ -281,4 +287,4 @@ Complete register: [`docs/known_unknown_assumptions.md`](docs/known_unknown_assu
 | **Retrieval** | [`src/ingest.py`](src/ingest.py) covers 4 retrieval modes. Completeness is proven by [`_manifest.json`](data/raw/_manifest.json), [`opensky_daily_counts.csv`](data/processed/opensky_daily_counts.csv) and the [AviationStack call ledger](data/raw/aviationstack/_call_ledger.json). Raw inputs are preserved as received. |
 | **Validation** | [`src/validate.py`](src/validate.py) (24 rules that flag and never delete), [`validation_report.md`](output/validation_report.md), [`known_unknown_assumptions.md`](docs/known_unknown_assumptions.md) (also summarised in the evidence table's brief K/U/A/L section), the independent DGCA benchmark in [`benchmark_comparison.md`](output/benchmark_comparison.md), and [`tests/`](tests/test_validate.py) |
 | **Workflow + metrics** | [`diagrams/workflow_model.md`](diagrams/workflow_model.md), [`src/model.py`](src/model.py), [`src/metrics.py`](src/metrics.py), [`evidence_table.md`](output/evidence_table.md) |
-| **Pipeline dependability** | [`src/pipeline.py`](src/pipeline.py), [`docs/run_evidence.md`](docs/run_evidence.md), [CI workflow](.github/workflows/ci.yml) |
+| **Pipeline dependability** | [`src/pipeline.py`](src/pipeline.py), [`docs/run_evidence.md`](docs/run_evidence.md), [CI workflow](.github/workflows/ci.yml) (reproducibility check + failure drill on every push) |

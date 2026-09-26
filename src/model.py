@@ -15,7 +15,14 @@ import sqlite3
 import numpy as np
 import pandas as pd
 
-from common import DB_PATH, PROCESSED, SourceError, atomic_write, get_logger, load_config
+from common import (
+    DB_PATH,
+    PROCESSED,
+    SourceError,
+    atomic_write,
+    get_logger,
+    load_config,
+)
 
 log = get_logger("model")
 
@@ -105,13 +112,13 @@ def crosscheck(a: pd.DataFrame, o: pd.DataFrame, cfg: dict) -> tuple[pd.DataFram
     oc["t"] = to_local(oc.first_seen.where(oc.direction == "DEP", oc.last_seen), zone)
     m = ac.merge(oc[["direction", "icao24", "callsign", "t", "leg_id"]], on=["direction", "icao24"])
     m["dt_min"] = (m.t - m.ref).dt.total_seconds() / 60
-    m = m[m.dt_min.abs() <= 90]
+    m = m[m.dt_min.abs() <= cfg["validation"]["crosscheck_match_window_min"]]
     # one-to-one: best leg per flight, then best flight per leg
     m = m.loc[m.groupby(["direction", "op_flight_icao"]).dt_min.apply(lambda s: s.abs().idxmin())]
     m = m.loc[m.groupby("leg_id").dt_min.apply(lambda s: s.abs().idxmin())]
     act = m[m.has_actual]
     stats = {
-        "n": int(len(act)),
+        "n": len(act),
         "median_diff_if_ist_min": round(float(act.dt_min.median()), 1),
         "median_diff_if_utc_min": round(float(act.dt_min.median() - utc_offset_min(zone)), 1),
         "iqr_min": round(float(act.dt_min.quantile(.75) - act.dt_min.quantile(.25)), 1),
@@ -205,7 +212,8 @@ def classify_domestic(L: pd.DataFrame, ap: pd.DataFrame, cfg: dict) -> dict:
     """Domestic = other end in India. Schedule destination first (authoritative), then OpenSky's estimate.
 
     Also returns the out-of-sample check of the callsign mapping: does OpenSky's observed destination agree with
-    the schedule's? OpenSky estimates the nearest airport (Juhu VAJJ for Mumbai VABB), so 'agree' = within 50 km.
+    the schedule's? OpenSky estimates the nearest airport (Juhu VAJJ for Mumbai VABB), so 'agree' = within
+    config validation.dest_agreement_km.
     """
     country = dict(zip(ap.ident, ap.iso_country, strict=True))
     country.update({k: v for k, v in zip(ap.icao_code, ap.iso_country, strict=True) if k})
@@ -215,7 +223,7 @@ def classify_domestic(L: pd.DataFrame, ap: pd.DataFrame, cfg: dict) -> dict:
     chk = L[L.sched_other_icao.notna() & L.other_airport.notna() & (L.other_airport != cfg["airport"]["icao"])]
     p1, p2 = coords.reindex(chk.sched_other_icao).values, coords.reindex(chk.other_airport).values
     km = haversine_km(p1[:, 0], p1[:, 1], p2[:, 0], p2[:, 1])
-    return chk.assign(ok=km <= 50).groupby("schedule_source").ok.mean().mul(100).round(1).to_dict()
+    return chk.assign(ok=km <= cfg["validation"]["dest_agreement_km"]).groupby("schedule_source").ok.mean().mul(100).round(1).to_dict()
 
 
 def build_events(L: pd.DataFrame) -> pd.DataFrame:
@@ -266,7 +274,11 @@ def build_weather_hours(w: pd.DataFrame, fl: pd.DataFrame, cfg: dict) -> pd.Data
 
 
 def build_departure_outcomes(L: pd.DataFrame, ta: pd.DataFrame, W: pd.DataFrame, cfg: dict) -> pd.DataFrame:
-    """ON_TIME / DELAYED per the DGCA rule, then attribute each delay (reactionary > weather > ground-side)."""
+    """ON_TIME / DELAYED per the DGCA rule, then attribute each delay (reactionary > weather > ground-side).
+
+    Ground-side needs positive evidence that the aircraft was available: its inbound landing was seen in time, or it
+    had been parked at BLR longer than a turn. A delay whose inbound OpenSky never saw is 'inbound not observed'.
+    """
     thr = cfg["kpi"]["on_time_threshold_min"]
     D = L[(L.direction == "DEP") & (L.in_kpi == 1)].copy()
     D["outcome"] = np.where(D.delay_min > thr, "DELAYED", "ON_TIME")
@@ -291,11 +303,14 @@ def build_departure_outcomes(L: pd.DataFrame, ta: pd.DataFrame, W: pd.DataFrame,
     in_block = D.wheels_down_local + pd.Timedelta(minutes=cfg["taxi"]["default_taxi_in_min"])
     min_turn = pd.Timedelta(minutes=cfg["turnaround"]["min_turn_minutes"])
     D["inbound_late"] = (D.inbound_arr_leg_id.notna() & (in_block + min_turn > D.sched_local + pd.Timedelta(minutes=thr))).astype(int)
+    # Parked longer than an operational turn (overnight): the aircraft was at BLR well before STD.
+    parked = set(ta.dep_leg_id[ta.ground_min > cfg["turnaround"]["max_hours"] * 60])
+    D["inbound_seen"] = (D.inbound_arr_leg_id.notna() | D.leg_id.isin(parked)).astype(int)
     D["attribution"] = np.select(
-        [D.outcome == "ON_TIME", D.inbound_late == 1, D.wx_exposed == 1],
-        ["n/a (on time)", "reactionary (inbound late)", "weather-exposed"], "ground-side / other")
+        [D.outcome == "ON_TIME", D.inbound_late == 1, D.wx_exposed == 1, D.inbound_seen == 0],
+        ["n/a (on time)", "reactionary (inbound late)", "weather-exposed", "inbound not observed"], "ground-side / other")
     return D[["leg_id", "outcome", "delay_min", "wx_exposed", "inbound_arr_leg_id", "inbound_arr_delay_min",
-              "inbound_late", "attribution"]].rename(columns={"leg_id": "dep_leg_id"})
+              "inbound_late", "inbound_seen", "attribution"]].rename(columns={"leg_id": "dep_leg_id"})
 
 
 def write_tables(con: sqlite3.Connection, tables: dict[str, pd.DataFrame]) -> None:
@@ -331,7 +346,8 @@ def run() -> dict:
     # 1. schedule reference + cross-check day (A-3, A-4, K-7, K-8, K-9)
     sched = build_schedule_ref(as_ok)
     xw_raw, tz_stats = crosscheck(as_ok, o[~o.leg_id.isin(os_excluded)], cfg)
-    if tz_stats["n"] < 20 or abs(tz_stats["median_diff_if_ist_min"]) > 10:
+    v = cfg["validation"]
+    if tz_stats["n"] < v["crosscheck_min_matches"] or abs(tz_stats["median_diff_if_ist_min"]) > v["crosscheck_max_median_offset_min"]:
         raise SourceError(f"model: AviationStack/OpenSky cross-check failed ({tz_stats}); time-zone assumption not proven")
     log.info("cross-check: %d matched flights; OpenSky - AviationStack actual = %+.1f min if local vs %+.1f if UTC -> times are local",
              tz_stats["n"], tz_stats["median_diff_if_ist_min"], tz_stats["median_diff_if_utc_min"])

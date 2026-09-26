@@ -61,6 +61,22 @@ turnaround:
   # turns (assumption A-8).
   min_turn_minutes: 30
 
+# Data-quality thresholds used by validate.py and model.py. Rule IDs and wording live in validate.py,
+# which quotes these values in the validation report so the report can never drift from this file.
+validation:
+  max_detect_horiz_m: 20000        # V-OS-6: first/last detection more than 20 km from BLR = timestamp minutes off
+  max_detect_vert_m: 1500          # V-OS-6: or more than 1,500 m above it
+  circuit_max_minutes: 60          # V-OS-7: a BLR->BLR leg shorter than this is a circuit; longer = merged round trip
+  crosscheck_match_window_min: 90  # AviationStack row <-> OpenSky leg: same aircraft within this many minutes
+  crosscheck_min_matches: 20       # fewer matched flights on the cross-check day = time zone not proven; run stops
+  crosscheck_max_median_offset_min: 10   # |median(OpenSky - AviationStack)| above this = times are NOT local; run stops
+  dest_agreement_km: 50            # K-11: OpenSky's estimated destination "agrees" with the schedule's within this
+
+# Thresholds for the written decision in the evidence table (metrics.py).
+report:
+  min_group_departures: 200        # airline groups compared in the decision text need at least this many KPI departures
+  even_spread_ratio: 1.5           # ground-side rates within this factor across groups = one airport-wide problem
+
 weather:
   # An hour is "adverse" if ANY condition is met.
   adverse:

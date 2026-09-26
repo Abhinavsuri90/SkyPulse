@@ -22,3 +22,11 @@ jobs:
         run: python src/pipeline.py --offline
       - name: Committed numbers are exactly what the pipeline produces
         run: git diff --exit-code -I '"generated_utc"' -- data/processed/metrics.json data/processed/benchmark.json data/processed/model_stats.json
+      - name: Failure drill, a late stage fails and every output is rolled back
+        run: |
+          snap() { find output data/processed docs/known_unknown_assumptions.md -type f ! -name run_status.json ! -name LAST_RUN_FAILED.md | sort | xargs sha256sum; }
+          snap > /tmp/before.txt
+          if python src/pipeline.py --offline --fault benchmark; then echo "the drill was supposed to fail"; exit 1; fi
+          snap | diff /tmp/before.txt -
+          echo "every output restored"
+          test -f output/LAST_RUN_FAILED.md

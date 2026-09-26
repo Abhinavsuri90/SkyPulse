@@ -1,10 +1,10 @@
 {
-  "run_id": "20260924T000817Z",
+  "run_id": "20260926T142041Z",
   "status": "OK",
   "stages": [
     {
       "stage": "ingest",
-      "seconds": 1.4,
+      "seconds": 0.7,
       "result": {
         "ourairports": 86119,
         "open_meteo": 744,
@@ -15,7 +15,7 @@
     },
     {
       "stage": "validate",
-      "seconds": 0.7,
+      "seconds": 0.6,
       "result": {
         "opensky": 21183,
         "aviationstack": 1486,
@@ -26,7 +26,7 @@
     },
     {
       "stage": "model",
-      "seconds": 1.3,
+      "seconds": 1.2,
       "result": {
         "flight_leg_rows": 20549,
         "in_kpi": {
@@ -62,5 +62,5 @@
       "result": null
     }
   ],
-  "at_utc": "2026-09-24T00:08:24+00:00"
+  "at_utc": "2026-09-26T14:20:47+00:00"
 }

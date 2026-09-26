@@ -3,6 +3,7 @@
     pytest -q
 """
 import json
+import sys
 
 import pandas as pd
 import pytest
@@ -11,6 +12,7 @@ import requests
 import common
 import ingest
 import model
+import pipeline
 import validate
 from benchmark import parse_dgca_report, validate_parse
 from common import RAW, SourceError, load_config
@@ -129,6 +131,22 @@ def test_small_retime_needs_the_schedule_sample_to_contradict_it():
     assert model.detect_retimes(legs, thr, rt, late_too).empty
 
 
+def test_delay_is_ground_side_only_when_the_aircraft_was_provably_at_blr():
+    std = pd.Timestamp("2026-08-10 10:00")  # every departure: STD 10:00, left 40 min late, clear weather
+    L = pd.DataFrame({"leg_id": ["D-ok", "D-late", "D-parked", "D-unseen", "A-ok", "A-late", "A-parked"],
+                      "direction": ["DEP"] * 4 + ["ARR"] * 3, "in_kpi": 1, "delay_min": 40.0,
+                      "sched_local": std, "gate_local_est": std + pd.Timedelta(minutes=40)})
+    ta = pd.DataFrame({"dep_leg_id": ["D-ok", "D-late", "D-parked"], "arr_leg_id": ["A-ok", "A-late", "A-parked"],
+                       "wheels_down_local": [std - pd.Timedelta(hours=2), std - pd.Timedelta(minutes=5), std - pd.Timedelta(hours=15)],
+                       "ground_min": [160.0, 45.0, 940.0], "valid": [1, 1, 0]})
+    W = pd.DataFrame({"hour_local": [std], "adverse": [0]})
+    got = model.build_departure_outcomes(L, ta, W, CFG).set_index("dep_leg_id").attribution.to_dict()
+    assert got == {"D-ok": "ground-side / other",              # landed 2 h before STD
+                   "D-late": "reactionary (inbound late)",     # landed 5 min before STD: no 30-min turn possible
+                   "D-parked": "ground-side / other",          # parked overnight: was at BLR in time
+                   "D-unseen": "inbound not observed"}         # OpenSky never saw it land: not blamed on the ground
+
+
 # ---------------------------------------------------------------- benchmark source
 def test_dgca_parser_reads_blr_and_flags_the_reports_own_duplicate():
     otp, reasons = parse_dgca_report(RAW / "dgca" / "dgca_traffic_report_2026-08.pdf")
@@ -190,3 +208,33 @@ def test_secrets_never_reach_error_messages(monkeypatch):
         common.http_request("GET", "https://example.invalid", params={"access_key": key}, log=common.get_logger("test"),
                             label="t", cfg=CFG)
     assert key not in str(e.value) and "***" in str(e.value)
+
+
+def test_failed_late_stage_restores_every_output(monkeypatch, tmp_path):
+    out, proc = tmp_path / "output", tmp_path / "processed"
+    out.mkdir()
+    proc.mkdir()
+    (out / "evidence_table.md").write_text("last good run")
+    (proc / "metrics.json").write_text('{"otp": 91.6}')
+    monkeypatch.setattr(pipeline, "GUARDED", [out, proc])
+    monkeypatch.setattr(pipeline, "OUTPUT", out)
+    monkeypatch.setattr(pipeline, "FAIL_MARKER", out / "LAST_RUN_FAILED.md")
+    monkeypatch.setenv("SKYPULSE_FAULT", "")  # restored after the test; main() overwrites it
+
+    def metrics_stage():  # the metrics stage rewrites outputs, then the benchmark stage fails
+        (out / "evidence_table.md").write_text("half of a new run")
+        (proc / "metrics.json").unlink()
+        (proc / "stray.csv").write_text("x")
+
+    for mod, fn in ((pipeline.ingest, lambda **k: []), (pipeline.validate, dict), (pipeline.model, dict),
+                    (pipeline.metrics, metrics_stage)):
+        monkeypatch.setattr(mod, "run", fn)
+    monkeypatch.setattr(sys, "argv", ["pipeline.py", "--fault", "benchmark"])
+
+    assert pipeline.main() == 1
+    assert (out / "evidence_table.md").read_text() == "last good run"
+    assert (proc / "metrics.json").read_text() == '{"otp": 91.6}'
+    assert not (proc / "stray.csv").exists()
+    status = json.loads((out / "run_status.json").read_text())
+    assert status["failed_stage"] == "benchmark" and [s["stage"] for s in status["completed_stages"]][-1] == "metrics"
+    assert (out / "LAST_RUN_FAILED.md").exists()

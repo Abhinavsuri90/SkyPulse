@@ -1,6 +1,6 @@
 # Validation report
 
-_Generated 2026-09-24 00:08 UTC by `src/validate.py` from the current raw snapshot._
+_Generated 2026-09-26 14:20 UTC by `src/validate.py` from the current raw snapshot._
 
 Rows are **flagged, never deleted**. `exclude` keeps the row in the database but out of KPI maths.
 

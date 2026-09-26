@@ -30,9 +30,20 @@ from urllib.parse import quote
 import pandas as pd
 import pdfplumber
 
-from common import (PROCESSED, RAW, CredentialMissing, SourceError, atomic_write, day_bounds_epoch,
-                    get_logger, http_request, load_config, local_days, record_raw,
-                    require_env)
+from common import (
+    PROCESSED,
+    RAW,
+    CredentialMissing,
+    SourceError,
+    atomic_write,
+    day_bounds_epoch,
+    get_logger,
+    http_request,
+    load_config,
+    local_days,
+    record_raw,
+    require_env,
+)
 
 log = get_logger("ingest")
 ALL_SOURCES = ("ourairports", "weather", "dgca", "opensky")
@@ -125,7 +136,7 @@ def ingest_dgca(cfg: dict, refresh: bool) -> dict:
         record_raw(listing_path, source="dgca", url=src["listing_url"], params=form, rows=len(links),
                    note="DGCA 'Air Traffic' page listing (monthly domestic traffic reports)")
         pat = dgca_month_pattern(month)
-        hits = [l for l in links if pat.search(l.rsplit("/", 1)[-1])]
+        hits = [link for link in links if pat.search(link.rsplit("/", 1)[-1])]
         log.info("dgca: listing has %d traffic reports; %d match %s: %s", len(links), len(hits), month, hits)
         if not hits:
             raise SourceError(f"dgca: no traffic report for {month} on the DGCA listing yet "

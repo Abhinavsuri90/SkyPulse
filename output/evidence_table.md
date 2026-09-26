@@ -1,6 +1,6 @@
 # SkyPulse evidence table: BLR, 2026-08-01 → 2026-08-31
 
-_Generated 2026-09-24 00:08 UTC by `src/metrics.py` from the committed raw snapshot. Every number is reproducible with `python src/pipeline.py`._
+_Generated 2026-09-26 14:20 UTC by `src/metrics.py` from the committed raw snapshot. Every number is reproducible with `python src/pipeline.py`._
 
 **KPI:** On-Time Departure Rate. **Population:** BLR departures that have a real schedule match (AviationStack) and pass every validation rule. That is 6,430 of 10,157 observed departures; see `output/validation_report.md` for what was excluded and why.
 
@@ -20,9 +20,10 @@ Precedence follows DGCA (reactionary first); see `diagrams/workflow_model.md`.
 
 | Attribution | Delayed departures | Share |
 |---|---|---|
-| ground-side / other | 319 | 59.2% |
+| ground-side / other | 292 | 54.2% |
 | reactionary (inbound late) | 153 | 28.4% |
 | weather-exposed | 67 | 12.4% |
+| inbound not observed | 27 | 5.0% |
 
 | Airline group | Departures | OTP | Avg delay (min) |
 |---|---|---|---|
@@ -32,21 +33,21 @@ Precedence follows DGCA (reactionary first); see `diagrams/workflow_model.md`.
 | Other | 201 | 84.1% | +6.6 |
 | Alliance Air | 69 | 78.3% | +19.3 |
 
-| Delayed departures by group: count (per 100 departures) | Reactionary | Weather-exposed | Ground-side / other | Inbound flights > 15 min late |
-|---|---|---|---|---|
-| Air India Group | 78 (5.2) | 13 (0.9) | 82 (5.4) | 15% of 923 |
-| Akasa Air | 2 (0.4) | 1 (0.2) | 19 (4.1) | 11% of 253 |
-| Alliance Air | 6 (8.7) | 0 (0.0) | 9 (13.0) | 24% of 63 |
-| IndiGo | 54 (1.3) | 53 (1.3) | 190 (4.5) | 7% of 3,050 |
-| Other | 13 (6.5) | 0 (0.0) | 19 (9.5) | n/a (no schedule) |
+| Delayed departures by group: count (per 100 departures) | Reactionary | Weather-exposed | Ground-side / other | Inbound not observed | Inbound flights > 15 min late |
+|---|---|---|---|---|---|
+| Air India Group | 78 (5.2) | 13 (0.9) | 77 (5.1) | 5 (0.3) | 15% of 923 |
+| Akasa Air | 2 (0.4) | 1 (0.2) | 18 (3.9) | 1 (0.2) | 11% of 253 |
+| Alliance Air | 6 (8.7) | 0 (0.0) | 9 (13.0) | 0 (0.0) | 24% of 63 |
+| IndiGo | 54 (1.3) | 53 (1.3) | 170 (4.1) | 20 (0.5) | 7% of 3,050 |
+| Other | 13 (6.5) | 0 (0.0) | 18 (9.0) | 1 (0.5) | n/a (no schedule) |
 
 ## Decision supported
 
-**Lead with turnaround staffing / ground process.** Of delayed departures, 59% were ground-side (the aircraft was at the gate in time and the weather was clear, yet it still left late), against 41% inbound-late or weather-exposed. The strongest BLR-specific evidence is the inbound side: arriving flights reach the gate a median 12 min **early** (89% within 15 min), so most aircraft are available in time, and the delay is added on the ground.
+**Lead with turnaround staffing / ground process.** Of delayed departures, 54% were ground-side (the aircraft was at the gate in time and the weather was clear, yet it still left late), against 41% inbound-late or weather-exposed. The remaining 5% had no observed inbound aircraft, so they are counted as neither. The strongest BLR-specific evidence is the inbound side: arriving flights reach the gate a median 12 min **early** (89% within 15 min), so most aircraft are available in time, and the delay is added on the ground.
 
-Ground-side delay is **airport-wide, not one airline's**: every airline group with 200+ departures loses 4.1–5.4 departures per 100 to it, and IndiGo alone accounts for 190 of the 319 ground-side cases.
+Ground-side delay is **airport-wide, not one airline's**: every airline group with 200+ departures loses 3.9–5.1 departures per 100 to it, and IndiGo alone accounts for 170 of the 292 ground-side cases.
 
-Of the airline groups with 200+ departures, Air India Group has the lowest OTP: 88.5% on 1,509 departures vs Akasa Air 95.3% at the same airport in the same weather (DGCA's own BLR figures show the same order). Most of that gap is **late-arriving aircraft, not the BLR turn**: per 100 departures it has 5.2 reactionary delays against 0.4 at Akasa Air and 1.3 at IndiGo, and 5.4 ground-side against 4.1 and 4.5. Its inbound flights reach BLR more than 15 min late 15% of the time, against 11% and 7%. So the airline liaison team's conversation with Air India Group is about inbound punctuality and buffers on its late-running rotations, not BLR ground staff.
+Of the airline groups with 200+ departures, Air India Group has the lowest OTP: 88.5% on 1,509 departures vs Akasa Air 95.3% at the same airport in the same weather (DGCA's own BLR figures show the same order, 87.3% vs 96.4%). Most of that gap is **late-arriving aircraft, not the BLR turn**: per 100 departures it has 5.2 reactionary delays against 0.4 at Akasa Air and 1.3 at IndiGo, and 5.1 ground-side against 3.9 and 4.1. Its inbound flights reach BLR more than 15 min late 15% of the time, against 11% and 7%. So the airline liaison team's conversation with Air India Group is about inbound punctuality and buffers on its late-running rotations, not BLR ground staff.
 
 **Where this could be wrong:** DGCA's *national* delay-cause split is 65% reactionary. Our reactionary test is stricter (the aircraft must have been physically unable to make STD), and the national figure includes the most congested hubs (Delhi, Mumbai), which carry the most flights. If BLR's true split looked like the national one, padding would win. The same happens if BLR's typical taxi-out were longer than 20 min (see the sensitivity table below). Asking the two largest airlines for their BLR-coded delay reasons would settle it; see `output/benchmark_comparison.md`.
 
@@ -54,16 +55,16 @@ Schedule padding would mainly help the reactionary share (28%). The weather-expo
 
 ## Sensitivity to the one assumption we could not measure (taxi-out allowance, A-2)
 
-| Taxi-out allowance | OTP | Ground-side share | Reactionary share | Weather share | Airline OTP ranking |
-|---|---|---|---|---|---|
-| 0 min | 67.2% | 81% | 7% | 12% | IndiGo > Air India Group > Akasa Air > Alliance Air |
-| 5 min | 80.2% | 75% | 12% | 13% | IndiGo > Air India Group > Akasa Air > Alliance Air |
-| 10 min | 87.6% | 68% | 19% | 13% | Akasa Air > IndiGo > Air India Group > Alliance Air |
-| 15 min | 91.6% | 59% | 28% | 12% | Akasa Air > IndiGo > Air India Group > Alliance Air |
-| 20 min | 93.7% | 53% | 38% | 9% | Akasa Air > IndiGo > Air India Group > Alliance Air |
-| 25 min | 95.0% | 44% | 48% | 8% | Akasa Air > IndiGo > Air India Group > Alliance Air |
+| Taxi-out allowance | OTP | Ground-side share | Reactionary share | Weather share | Inbound not observed | Airline OTP ranking |
+|---|---|---|---|---|---|---|
+| 0 min | 67.2% | 77% | 7% | 12% | 4% | IndiGo > Air India Group > Akasa Air > Alliance Air |
+| 5 min | 80.2% | 70% | 12% | 13% | 5% | IndiGo > Air India Group > Akasa Air > Alliance Air |
+| 10 min | 87.6% | 62% | 19% | 13% | 5% | Akasa Air > IndiGo > Air India Group > Alliance Air |
+| 15 min | 91.6% | 54% | 28% | 12% | 5% | Akasa Air > IndiGo > Air India Group > Alliance Air |
+| 20 min | 93.7% | 50% | 38% | 9% | 3% | Akasa Air > IndiGo > Air India Group > Alliance Air |
+| 25 min | 95.0% | 42% | 48% | 8% | 2% | Akasa Air > IndiGo > Air India Group > Alliance Air |
 
-Ground-side / other is the largest delay cause for **every allowance up to 20 min**. At 25 min, reactionary (inbound late) overtakes it (48% vs 44%). The airline ranking (Akasa Air > IndiGo > Air India Group > Alliance Air) holds for every allowance of 10 min or more. **So the recommendation holds for any taxi-out between 10 and 20 min.** The allowance that reproduces DGCA's published OTP is in `output/benchmark_comparison.md`. The OTP *level* moves with the allowance; the decision only changes outside this window.
+Ground-side / other is the largest delay cause for **every allowance up to 20 min**. At 25 min, reactionary (inbound late) overtakes it (48% vs 42%). The airline ranking (Akasa Air > IndiGo > Air India Group > Alliance Air) holds for every allowance of 10 min or more. **So the recommendation holds for any taxi-out between 10 and 20 min.** The allowance that reproduces DGCA's published OTP is in `output/benchmark_comparison.md`. The OTP *level* moves with the allowance; the decision only changes outside this window.
 
 **Retimes (V-DR-5):** 429 legs on 20 flight codes were offset from the September schedule on almost every August operation. Either the offset was large, or it was steady while the September sample showed the same flight on time. That is the signature of a schedule change between August and the September sample, not of delay. Excluding them moves OTP from 88.2% to 91.6%. Most were Air India Group (365 legs); left in, they would have exaggerated that group's delay problem.
 
@@ -87,4 +88,5 @@ Full register, with IDs and evidence: `docs/known_unknown_assumptions.md`.
 
 **Limitation**
 - 23% of the five airline groups' departures have no schedule match. They count in traffic and turnarounds, not in delay metrics (L-6).
+- 27 delayed departures have no observed inbound aircraft (OpenSky missed the landing). They are reported as "inbound not observed", not assumed to be ground-side (L-8).
 - DGCA's figures are airline self-reported (L-3); weather is modelled, not observed (L-4); the window is one monsoon month (L-5).

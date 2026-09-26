@@ -23,10 +23,22 @@ from pathlib import Path
 
 import pandas as pd
 
-from common import (DB_PATH, DOCS, OUTPUT, PROCESSED, RAW, SourceError, atomic_write, get_logger,
-                    load_config, local_days)
+from common import (
+    DB_PATH,
+    DOCS,
+    OUTPUT,
+    PROCESSED,
+    RAW,
+    SourceError,
+    atomic_write,
+    get_logger,
+    load_config,
+    local_days,
+)
 
 log = get_logger("validate")
+_CFG = load_config()  # rule descriptions quote the thresholds, so the report can never drift from config.yaml
+_V, _K, _T, _R = _CFG["validation"], _CFG["kpi"], _CFG["turnaround"], _CFG["kpi"]["retime"]
 
 # ID -> (severity, description, business reason)
 RULES = {
@@ -36,7 +48,7 @@ RULES = {
     "V-OS-3": ("exclude", "no duplicate leg (direction, icao24, firstSeen)", "Duplicates would double-count flights"),
     "V-OS-4": ("exclude", "callsign follows the airline pattern AAA9...", "Private / blank callsigns are not scheduled flights and have no schedule"),
     "V-OS-5": ("info", "callsign prefix is in the config airline map", "Unmapped airlines cannot be rolled up to a DGCA group"),
-    "V-OS-6": ("exclude", "first/last detection within 20 km and 1,500 m of BLR", "A far detection means the timestamp is minutes off the real take-off/landing"),
+    "V-OS-6": ("exclude", f"first/last detection within {_V['max_detect_horiz_m'] / 1000:g} km and {_V['max_detect_vert_m']:,} m of BLR", "A far detection means the timestamp is minutes off the real take-off/landing"),
     "V-OS-7": ("exclude", "not a BLR->BLR leg (circuit, or round trip merged by OpenSky)", "Merged round trips carry the OUTBOUND callsign on the inbound end"),
     "V-OS-8": ("info", "other-end airport is known", "Needed for domestic/international split; falls back to the schedule"),
     # AviationStack schedule sample
@@ -55,10 +67,10 @@ RULES = {
     "V-AP-2": ("info", "airport codes seen in flight legs resolve in airports.csv", "Unresolved codes cannot be classified domestic/international"),
     # Derived (applied in model.py)
     "V-DR-1": ("exclude", "leg matched to a schedule (flight code or learned callsign mapping)", "No schedule, no delay; the leg is still counted in traffic and turnarounds"),
-    "V-DR-2": ("exclude", "computed delay within [-60, +720] min", "Outside this, the schedule match is almost certainly the wrong rotation/day"),
+    "V-DR-2": ("exclude", f"computed delay within [{_K['delay_min_bound']}, +{_K['delay_max_bound']}] min", "Outside this, the schedule match is almost certainly the wrong rotation/day"),
     "V-DR-3": ("info", "callsign->flight mapping is unambiguous", "Ambiguous mappings are not used"),
-    "V-DR-4": ("info", "turnaround between 20 min and 12 h", "Shorter = artefact; longer = parked overnight, not an operational turn"),
-    "V-DR-5": ("exclude", "flight code is not systematically offset from its schedule (late on >=80% of >=5 ops with a median > 60 min, or a stable offset while the Sept sample shows it on time; or early the same way)",
+    "V-DR-4": ("info", f"turnaround between {_T['min_minutes']} min and {_T['max_hours']} h", "Shorter = artefact; longer = parked overnight, not an operational turn"),
+    "V-DR-5": ("exclude", f"flight code is not systematically offset from its schedule (late on >={_R['share']:.0%} of >={_R['min_ops']} ops with a median > {_R['median_late_min']} min, or a stable offset while the Sept sample shows it on time; or early the same way)",
                "That signature is a schedule change between August and the Sept sample (a retime), not a delay"),
 }
 
@@ -148,15 +160,16 @@ def validate_opensky(o: pd.DataFrame, cfg: dict, flags: Flags) -> None:
     flags.add(E, o.leg_id[bad_cs], "V-OS-4", "blank or registration-style callsign")
     flags.add(E, o.leg_id[~bad_cs & ~o.callsign.str[:3].isin(cfg["airlines"].keys())], "V-OS-5")
     dep, arr = o.direction == "DEP", o.direction == "ARR"
-    far = (dep & ((o.dep_horiz_m > 20000) | (o.dep_vert_m > 1500))) | (arr & ((o.arr_horiz_m > 20000) | (o.arr_vert_m > 1500)))
+    hmax, vmax = cfg["validation"]["max_detect_horiz_m"], cfg["validation"]["max_detect_vert_m"]
+    far = (dep & ((o.dep_horiz_m > hmax) | (o.dep_vert_m > vmax))) | (arr & ((o.arr_horiz_m > hmax) | (o.arr_vert_m > vmax)))
     flags.add(E, o.leg_id[far], "V-OS-6")
     icao = cfg["airport"]["icao"]
     same = (o.est_dep_airport == icao) & (o.est_arr_airport == icao)
-    dur = (o.last_seen - o.first_seen) / 60
-    # Circuit / return-to-base (<60 min): neither end is a scheduled movement.
-    flags.add(E, o.leg_id[same & (dur < 60)], "V-OS-7", "circuit / return to base")
-    # Merged round trip (>=60 min): the BLR take-off is real, but the BLR landing carries the outbound callsign.
-    flags.add(E, o.leg_id[same & (dur >= 60) & arr], "V-OS-7", "merged round trip: inbound end has outbound callsign")
+    dur, circuit = (o.last_seen - o.first_seen) / 60, cfg["validation"]["circuit_max_minutes"]
+    # Circuit / return-to-base (shorter than circuit_max_minutes): neither end is a scheduled movement.
+    flags.add(E, o.leg_id[same & (dur < circuit)], "V-OS-7", "circuit / return to base")
+    # Merged round trip (longer): the BLR take-off is real, but the BLR landing carries the outbound callsign.
+    flags.add(E, o.leg_id[same & (dur >= circuit) & arr], "V-OS-7", "merged round trip: inbound end has outbound callsign")
     other = o.est_arr_airport.where(dep, o.est_dep_airport)
     flags.add(E, o.leg_id[other.isna()], "V-OS-8")
 
@@ -275,6 +288,8 @@ def report() -> None:
     auto = [f"### Measured on the current data (regenerated {stamp})\n",
             "| ID | Type | Finding (from this run) |", "|---|---|---|"]
     if s:
+        top_grp, top_n = (max(s["retimed"]["legs_by_group"].items(), key=lambda kv: kv[1])
+                          if s["retimed"]["legs_by_group"] else ("no group", 0))
         auto += [
             f"| K-7 | Known | AviationStack's `+00:00` timestamps are **local IST**, not UTC: on the cross-check day, matched flights differ from OpenSky by a median **{s['tz_check']['median_diff_if_ist_min']:+.1f} min** if read as IST vs **{s['tz_check']['median_diff_if_utc_min']:+.1f} min** if read as UTC (n={s['tz_check']['n']}). |",
             f"| K-8 | Known | AviationStack `actual` = `actual_runway` in {s['as_actual_equals_runway_pct']:.0f}% of rows and sits {s['tz_check']['by_direction']['DEP']:+.1f} min from OpenSky wheels-up (departures) and {s['tz_check']['by_direction']['ARR']:+.1f} min from wheels-down (arrivals). It is itself ADS-B-derived runway time, **not an independent gate time**, so it cannot measure taxi-out (A-2 stays a config default, with sensitivity reported). |",
@@ -283,15 +298,15 @@ def report() -> None:
             f"| L-7 | Limitation | OpenSky loses {s['dep_dest_unknown_pct']:.0f}% of departures before they reach their destination (no `estArrivalAirport`). Domestic vs international falls back to the schedule's destination; {s['domestic_unknown_pct']:.0f}% of KPI departures stay unclassified. |",
             "| A-7 | Assumption (verified → K-7) | AviationStack times are local. Status: **verified** by cross-check. |",
             f"| K-10 | Known | {s['merged_round_trips']} OpenSky legs are BLR→BLR ~5 h round trips where OpenSky missed the outstation stop. Their take-offs are kept. Their landings are kept for turnarounds but excluded from arrival delay, because they carry the outbound callsign (V-OS-7). |",
-            f"| K-11 | Known | The callsign mapping holds out of sample: OpenSky's observed destination is within 50 km of the scheduled one for {s['dest_agreement_pct_by_source'].get('callsign_map', float('nan')):.1f}% of mapped August legs vs {s['dest_agreement_pct_by_source'].get('flight_code', float('nan')):.1f}% of direct matches (A-4). |",
-            f"| K-12 | Known | {s['retimed']['legs']} legs on {s['retimed']['flight_codes']} flight codes were retimed between August and the September sample (V-DR-5); {s['retimed']['legs_by_group'].get('Air India Group', 0)} of them Air India Group. Left in, they would have inflated that group's delays. |",
+            f"| K-11 | Known | The callsign mapping holds out of sample: OpenSky's observed destination is within {_V['dest_agreement_km']} km of the scheduled one for {s['dest_agreement_pct_by_source'].get('callsign_map', float('nan')):.1f}% of mapped August legs vs {s['dest_agreement_pct_by_source'].get('flight_code', float('nan')):.1f}% of direct matches (A-4). |",
+            f"| K-12 | Known | {s['retimed']['legs']} legs on {s['retimed']['flight_codes']} flight codes were retimed between August and the September sample (V-DR-5); {top_n} of them {top_grp}. Left in, they would have inflated that group's delays. |",
         ]
     auto += ["", "Rule-by-rule counts: see `output/validation_report.md`."]
     kua = DOCS / "known_unknown_assumptions.md"
     text = kua.read_text()
     new = re.sub(r"<!-- AUTO:START.*?<!-- AUTO:END -->",
                  "<!-- AUTO:START (generated by src/validate.py, do not edit by hand) -->\n" + "\n".join(auto) + "\n<!-- AUTO:END -->",
-                 text, flags=re.S)
+                 text, flags=re.DOTALL)
     atomic_write(kua, new)
     log.info("wrote output/validation_report.md and AUTO block of docs/known_unknown_assumptions.md")
 
