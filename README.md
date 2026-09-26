@@ -4,6 +4,7 @@
 ![python](https://img.shields.io/badge/python-3.13-3776AB)
 ![data](https://img.shields.io/badge/data-August%202026-informational)
 ![sources](https://img.shields.io/badge/sources-5-success)
+![license](https://img.shields.io/badge/license-MIT-lightgrey)
 
 A reproducible data pipeline that turns five public aviation data sources into one operational decision for Kempegowda International Airport: **is departure delay coming from the air or from the ground, and how does BLR compare with the regulator's published figures?**
 
@@ -288,3 +289,9 @@ Complete register: [`docs/known_unknown_assumptions.md`](docs/known_unknown_assu
 | **Validation** | [`src/validate.py`](src/validate.py) (24 rules that flag and never delete), [`validation_report.md`](output/validation_report.md), [`known_unknown_assumptions.md`](docs/known_unknown_assumptions.md) (also summarised in the evidence table's brief K/U/A/L section), the independent DGCA benchmark in [`benchmark_comparison.md`](output/benchmark_comparison.md), and [`tests/`](tests/test_validate.py) |
 | **Workflow + metrics** | [`diagrams/workflow_model.md`](diagrams/workflow_model.md), [`src/model.py`](src/model.py), [`src/metrics.py`](src/metrics.py), [`evidence_table.md`](output/evidence_table.md) |
 | **Pipeline dependability** | [`src/pipeline.py`](src/pipeline.py), [`docs/run_evidence.md`](docs/run_evidence.md), [CI workflow](.github/workflows/ci.yml) (reproducibility check + failure drill on every push) |
+
+---
+
+## License
+
+Code is released under the [MIT License](LICENSE). The raw data in `data/raw/` stays under its original sources' terms: OpenSky Network, AviationStack, Open-Meteo, OurAirports (public domain) and DGCA.
